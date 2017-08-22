@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Blog - {% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <link rel="stylesheet" href="{{ asset('css/lib/bootstrap.min.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/template.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" />
+
+    </head>
+    <body>
+    <div class="container">
+        <header>
+
+        </header>
+        <nav>
+            <ul>
+                <li><a href="{{ path("homepage") }}">Accueil</a></li>
+                <li><a href="{{ path("post_index") }}">Articles</a></li>
+                <li><a href="{{ path("categories_index") }}">Catégories</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+
+
+        <script type="text/javascript" src="{{ asset('js/lib/jquery-3.2.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/lib/bootstrap.min.js') }}"></script>
+    </body>
+</html>

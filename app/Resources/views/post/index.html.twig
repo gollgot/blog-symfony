@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+    
+    <h1>Tous les articles</h1>
+
+    <table id="table-post-index" class="table table-bordered table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date de création</th>
+                <th>Commentaires</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.title|length > 100 ? post.title|slice(0,100) ~ '...': post.title }}</td>
+                <td title="{{ post.createdAt|date('d.m.Y H:i:s') }}">{{ post.createdAt|date('d.m.Y') }}</td>
+                <td>{{ post.comments|length }}</td>
+                <td>
+                    <a title="Voir l'article : {{ post.title }}" href="{{ path('post_show', { 'id' : post.id }) }}"><button class="btn btn-primary">Voir</button></a>
+                    <a title="Éditer l'article : {{ post.title }}" href="{{ path('post_edit', { 'id' : post.id}) }}"><button class="btn btn-success">Éditer</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path("post_new") }}">
+        <button class="btn btn-primary">Créer un article</button>
+    </a>
+
+{% endblock %}

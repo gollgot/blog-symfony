@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <h1>Accueil</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="left-container">
+
+                {% for post in posts %}
+                    <div class="row post">
+                        <div class="col-md-5">
+                            <a class="thumb" href="{{ path('post_show', {'id' : post.id}) }}"></a>
+                        </div>
+                        <div class="col-md-7">
+                            <h2 class="post-title">
+                                <a href="{{ path('post_show', {'id' : post.id}) }}">
+                                    {{ post.title|length > 70 ? post.title|slice(0,70) ~ '...' : post.title }}
+                                </a>
+                            </h2>
+                            <div class="post-meta">
+                                <i>Posté le : {{ post.createdAt|date('d.m.Y à H\\hi') }} | {{ post.comments|length }} {{ post.comments|length > 1 ? 'commentaires' : 'commentaire' }}</i>
+                                <br>
+                                <i>Catégories :
+                                    {% if post.categories is not empty %}
+                                        {% for category in post.categories %}
+                                            <u><a href="#"></s>{{ category.name }}</a></u>
+                                        {% endfor %}
+                                    {% else %}
+                                        Aucune
+                                    {% endif %}
+                                </i>
+                            </div>
+                            <div class="post-resume">
+                                {{ post.content|length > 180 ? post.content|slice(0, 180) ~ '...' : post.content }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="right-container">deswaqw fwef w</div>
+        </div>
+    </div>
+{% endblock %}

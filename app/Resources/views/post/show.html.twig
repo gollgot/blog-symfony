@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="left-container">
+
+                <div class="post-show">
+                    <h1>{{ post.title }}</h1>
+
+                    <div class="post-meta">
+                        <i>Posté le : {{ post.createdAt|date('d.m.Y à H\\hi') }}</i>
+                        <br>
+                        <i>Catégories :
+                            {% if post.categories is not empty %}
+                                {% for category in post.categories %}
+                                    <u><a href="#"></s>{{ category.name }}</a></u>
+                                {% endfor %}
+                            {% else %}
+                                Aucune
+                            {% endif %}
+                        </i>
+                    </div>
+
+                    <img src="{{ asset('img/post/post-thumb.jpg') }}" alt="img">
+
+                    <div>
+                        {{ post.content }}
+                    </div>
+
+                    <h2>{{ post.comments|length }} {{ post.comments|length > 1 ? "commentaires" : "commentaire" }}</h2>
+
+                    <div id="comments">
+                        {% for comment in post.comments %}
+                            <div class="comment">
+                                <b>{{ comment.author }}</b><i class="comment-meta"> • {{ comment.createdAt|date('d.m.Y à H\\hi') }}</i>
+                                <div class="content">{{ comment.content }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="right-container">
+                deswaqw fwef w
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

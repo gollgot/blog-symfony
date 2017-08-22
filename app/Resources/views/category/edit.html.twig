@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Édition : {{ category.name }}{% endblock %}
+
+{% block body %}
+    <section id="categories-edit">
+        <a href="{{ path('categories_index') }}"><button class="btn btn-primary">Retour aux catégories</button></a>
+        <br>
+        <br>
+
+        <h1>Édition de la catégorie</h1>
+
+        {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <button class="btn btn-success btn-left">Éditer</button>
+        {{ form_end(edit_form) }}
+
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger">Supprimer</button>
+        {{ form_end(delete_form) }}
+    </section>
+{% endblock %}

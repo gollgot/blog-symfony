@@ -1,0 +1,65 @@
+/* HOME.INDEX */
+.left-container .post {
+    margin-bottom:40px;
+}
+.left-container a.thumb{
+    background-image: url('../img/post/post-thumb.jpg');
+    background-position: center center;
+    background-size: cover;
+    height: 185px;
+    display: block;
+}
+.left-container h2.post-title{
+    margin:10px 0px 10px 0px;
+    font-size:22px;
+}
+.left-container h2.post-title a:hover{
+    color:#1194f6;
+}
+.left-container .post-meta{
+    margin:0px 0px 10px 0px;
+    font-size:13px;
+}
+.left-container .post-meta a:hover{
+    color:#1194f6;
+}
+.left-container .post-resume{
+    font-size: 14px;
+    color: #888;
+}
+
+.right-container{
+    background-color: #0F0;
+}
+
+/* POSTS.SHOW */
+.left-container .post-show h1{
+    font-size: 35px;
+}
+.left-container .post-show img{
+    max-width:100%;
+    margin-bottom: 20px;
+}
+.left-container .post-show #comments .comment:first-child{
+    padding-top:10px;
+    border-top:1px solid #999;
+}
+.left-container .post-show #comments .comment{
+    border-bottom:1px solid #999;
+    margin-left:20px;
+    margin-top:10px;
+}
+.left-container .post-show #comments .comment .content{
+    margin:0px 0px 10px 0px;
+    padding:0px;
+}
+.left-container .post-show #comments .comment i.comment-meta{
+    color:#888;
+    font-size: 13px;
+}
+
+/* BUTTONS */
+button.btn-left {
+    float:left;
+    margin-right:20px;
+}

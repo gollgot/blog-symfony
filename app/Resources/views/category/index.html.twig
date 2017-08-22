@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories{% endblock %}
+
+{% block body %}
+    <h1>Toutes les catégories</h1>
+
+    <table id="table-category-index" class="table table-bordered table-hover table-responsive">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.name}}</td>
+                <td>
+                    <a title="Éditer la catégorie : {{ category.name }}" href="{{ path('categories_edit', { 'id' : category.id}) }}"><button class="btn btn-success">Éditer</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path("categories_new") }}">
+        <button class="btn btn-primary">Créer une catégorie</button>
+    </a>
+{% endblock %}
