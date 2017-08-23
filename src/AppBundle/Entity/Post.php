@@ -61,7 +61,7 @@ class Post
     /**
      * One Post has Many Comment.
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post")
-     * @ORM\OrderBy({"createdAt" = "ASC"})
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
 

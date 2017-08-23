@@ -40,6 +40,13 @@
                                 <div class="content">{{ comment.content }}</div>
                             </div>
                         {% endfor %}
+
+                        <h2>Ajouter un commentaire</h2>
+                        {{ form_start(newCommentForm) }}
+                            {{ form_widget(newCommentForm) }}
+                            <button class="btn btn-success">Ajouter</button>
+                        {{ form_end(newCommentForm) }}
+
                     </div>
 
                 </div>

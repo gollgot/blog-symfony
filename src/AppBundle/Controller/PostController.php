@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -64,13 +65,27 @@ class PostController extends Controller
      * Finds and displays a post entity.
      *
      * @Route("/{id}", name="post_show")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function showAction(Post $post)
+    public function showAction(Post $post, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $comment = new Comment();
+        $newCommentForm = $this->createForm('AppBundle\Form\CommentType', $comment);
+        $newCommentForm->handleRequest($request);
+
+        if ($newCommentForm->isSubmitted() && $newCommentForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $comment->setCreatedAt(new \DateTime);
+            $comment->setPost($post);
+            $em->persist($comment);
+            $em->flush();
+
+            return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
+        }
+
         return $this->render('post/show.html.twig', array(
-            'post' => $post
+            'post'           => $post,
+            'newCommentForm' => $newCommentForm->createView()
         ));
     }
 
