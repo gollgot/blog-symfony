@@ -2,12 +2,17 @@
 .left-container .post {
     margin-bottom:40px;
 }
-.left-container a.thumb{
-    background-image: url('../img/post/post-thumb.jpg');
-    background-position: center center;
-    background-size: cover;
+.left-container .post .img-container{
     height: 185px;
-    display: block;
+    position: relative;
+    overflow: hidden;
+}
+.left-container .post .img-container a img{
+    width:100%;
+    transition: all .2s ease-in-out;
+}
+.left-container .post .img-container a img:hover{
+    transform: scale(1.1);
 }
 .left-container h2.post-title{
     margin:10px 0px 10px 0px;
