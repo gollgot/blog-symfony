@@ -8,16 +8,18 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * @Route("/", name="homepage")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $posts = $em->getRepository('AppBundle:Post')->findBy(array(), array('createdAt' => 'DESC'));
+	/**
+	 * @Route("/", name="homepage")
+	 */
+	public function indexAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$posts = $em->getRepository('AppBundle:Post')->findBy(array(), array('createdAt' => 'DESC'));
+		$lastPosts = $em->getRepository('AppBundle:Post')->findBy(array(), array('createdAt' => 'DESC'), 3);
 
-        return $this->render('home/index.html.twig', [
-            'posts' => $posts
-        ]);
-    }
+		return $this->render('home/index.html.twig', [
+			'posts'     => $posts,
+			'lastPosts' => $lastPosts,
+		]);
+	}
 }

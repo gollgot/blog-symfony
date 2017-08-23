@@ -4,7 +4,6 @@
 }
 .left-container .post .img-container{
     height: 185px;
-    position: relative;
     overflow: hidden;
 }
 .left-container .post .img-container a img{
@@ -33,10 +32,6 @@
     color: #888;
 }
 
-.right-container{
-    background-color: #0F0;
-}
-
 /* POSTS.SHOW */
 .left-container .post-show h1{
     font-size: 35px;
@@ -60,6 +55,41 @@
 }
 .left-container .post-show #comments .comment i.comment-meta{
     color:#888;
+    font-size: 13px;
+}
+
+/* RIGHT CONTAINER */
+.right-container h4{
+    margin:0px 0px 15px 0px;
+    padding:0px;
+    color:#666;
+    text-transform: uppercase;
+}
+.right-container .last-post{
+    margin-bottom: 20px;
+}
+.right-container .last-post .img-container{
+    height:80px;
+    overflow: hidden;
+}
+.right-container .last-post .img-container a img{
+    width: 100%;
+    transition: all .2s ease-in-out;
+}
+.right-container .last-post .img-container a img:hover{
+    transform: scale(1.1);
+}
+.right-container .last-post .content{
+    margin: 0px;
+    padding-top:0px;
+    padding-left:0px;
+    padding-bottom:0px;
+}
+.right-container .last-post .content a:hover{
+    color: #1194f6;
+}
+.right-container .last-post .content .date{
+    color: #aaa;
     font-size: 13px;
 }
 
