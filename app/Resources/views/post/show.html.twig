@@ -56,27 +56,10 @@
 
         <div class="col-md-4">
             <div class="right-container">
-                <h4>Derniers articles</h4>
-
-                {% for lastPost in lastPosts %}
-                    <div class="row last-post">
-                        <div class="col-md-5">
-                            <div class="img-container">
-                                <a href="{{ path('post_show', {'id' : lastPost.id}) }}">
-                                    <img src="{{ asset('uploads/posts_images/' ~ lastPost.image) }}" alt="image">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-7 content">
-                            <a href="{{ path('post_show', {'id' : lastPost.id}) }}">{{ lastPost.title|length > 97 ? lastPost.title|trim(0,94) ~ '...' : lastPost.title}}</a>
-                            <div class="date">
-                                {{ lastPost.createdAt|date('d.m.Y') }}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+                {% include 'right_container.html.twig' with lastPosts %}
             </div>
         </div>
+
     </div>
 
 
