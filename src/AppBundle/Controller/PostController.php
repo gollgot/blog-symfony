@@ -48,6 +48,20 @@ class PostController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $post->setCreatedAt(new \DateTime);
+
+            /* IMAGE UPLOAD */
+            // The file object
+            $file = $post->getImage();
+            // Create a unique name, and use symfony fuessEtension method to prevent fake extension (will detect with mime type)
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            // Store the file in the folder configure in the config yml
+            $file->move(
+                $this->getParameter('posts_images_directory'),
+                $fileName
+            );
+            // Set the unique name as name in the field
+            $post->setImage($fileName);
+
             $em->persist($post);
             $em->flush();
 
@@ -100,11 +114,34 @@ class PostController extends Controller
         // Load a special form with delete method etc..
         $deleteForm = $this->createDeleteForm($post);
 
+        // Get the oldImageName, before we load on our object the form data values ($editForm->handleRequest($request);)
+        $oldImageName = $post->getImage();
+
         // Edit form
         $editForm = $this->createForm('AppBundle\Form\PostType', $post);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            // We edit the post, so delete old image (will add the new after) if exists
+            if(!empty($oldImageName) ) {
+                if (file_exists($this->getParameter('posts_images_directory') . '/' . $oldImageName)) {
+                    unlink($this->getParameter('posts_images_directory') . '/' . $oldImageName);
+                }
+            }
+
+            /* IMAGE UPLOAD */
+            // The file object
+            $file = $post->getImage();
+            // Create a unique name, and use symfony fuessEtension method to prevent fake extension (will detect with mime type)
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            // Store the file in the folder configure in the config yml
+            $file->move(
+                $this->getParameter('posts_images_directory'),
+                $fileName
+            );
+            // Set the unique name as name in the field
+            $post->setImage($fileName);
+
             // Get the entityManager and flush the post object
             $this->getDoctrine()->getManager()->flush();
 

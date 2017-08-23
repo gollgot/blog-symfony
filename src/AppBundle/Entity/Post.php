@@ -54,6 +54,24 @@ class Post
     private $createdAt;
 
     /**
+     * @ORM\Column(type="string")
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
+     */
+    private $image;
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", cascade={"persist"})
      */
     private $categories;
@@ -222,4 +240,5 @@ class Post
     {
         return $this->comments;
     }
+
 }
