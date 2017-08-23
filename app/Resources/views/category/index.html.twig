@@ -9,6 +9,7 @@
         <thead>
         <tr>
             <th>Nom</th>
+            <th>Article(s)</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -16,7 +17,9 @@
         {% for category in categories %}
             <tr>
                 <td>{{ category.name}}</td>
+                <td>{{ category.posts|length}}</td>
                 <td>
+                    <a title="Voir la catégorie : {{ category.name }}" href="{{ path('categories_show', { 'id' : category.id}) }}"><button class="btn btn-primary">Voir</button></a>
                     <a title="Éditer la catégorie : {{ category.name }}" href="{{ path('categories_edit', { 'id' : category.id}) }}"><button class="btn btn-success">Éditer</button></a>
                 </td>
             </tr>

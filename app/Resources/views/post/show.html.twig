@@ -17,7 +17,7 @@
                         <i>Catégories :
                             {% if post.categories is not empty %}
                                 {% for category in post.categories %}
-                                    <u><a href="#"></s>{{ category.name }}</a></u>
+                                    <u><a href="{{ path('categories_show', {'id' : category.id}) }}"></s>{{ category.name }}</a></u>
                                 {% endfor %}
                             {% else %}
                                 Aucune

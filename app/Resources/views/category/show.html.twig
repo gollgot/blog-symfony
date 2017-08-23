@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Catégorie {{ category.name }}{% endblock %}
 
 {% block body %}
-    <h1>Accueil</h1>
+
+    <h1>Catégorie : {{ category.name }}</h1>
 
     <div class="row">
         <div class="col-md-8">
             <div class="left-container">
 
-                {% for post in posts %}
+                {% for post in postsOfCategory %}
                     <div class="row post">
                         <div class="col-md-5">
                             <div class="img-container">
@@ -47,6 +48,7 @@
 
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="right-container">
                 <h4>Derniers articles</h4>
@@ -68,8 +70,9 @@
                         </div>
                     </div>
                 {% endfor %}
-
             </div>
         </div>
     </div>
+
+
 {% endblock %}

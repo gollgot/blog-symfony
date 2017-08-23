@@ -72,7 +72,7 @@ class Post
     }
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="posts", cascade={"persist"})
      */
     private $categories;
 
