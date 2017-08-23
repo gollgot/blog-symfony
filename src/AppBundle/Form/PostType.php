@@ -28,7 +28,7 @@ class PostType extends AbstractType
                 'choice_label' => 'name', // Category attributs, form will call category->getName() to display it
                 'label'        => 'Catégories',
                 'expanded'     => true,
-                'multiple'     => true,
+                'multiple'     => true
             ]);
     }
     

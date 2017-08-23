@@ -1,5 +1,5 @@
 {
-    "name": "loic/tuto-blog",
+    "name": "blog-symfony",
     "license": "proprietary",
     "type": "project",
     "autoload": {

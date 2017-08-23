@@ -36,24 +36,24 @@
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="15" parent="8" name="author">
+    <column id="15" parent="8" name="post_id">
       <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="16" parent="8" name="author">
+      <Position>3</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="16" parent="8" name="created_at">
-      <Position>3</Position>
+    <column id="17" parent="8" name="created_at">
+      <Position>4</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="17" parent="8" name="content">
-      <Position>4</Position>
+    <column id="18" parent="8" name="content">
+      <Position>5</Position>
       <DataType>longtext|0</DataType>
       <NotNull>1</NotNull>
-    </column>
-    <column id="18" parent="8" name="post_id">
-      <Position>5</Position>
-      <DataType>int(11)|0</DataType>
     </column>
     <index id="19" parent="8" name="IDX_9474526C4B89032C">
       <ColNames>post_id</ColNames>
