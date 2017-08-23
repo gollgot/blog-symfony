@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
@@ -26,6 +27,7 @@ class Comment
      * @var string
      *
      * @ORM\Column(name="author", type="string", length=50)
+     * @Assert\NotBlank(message="Veuillez remplir le champ auteur")
      */
     private $author;
 
@@ -40,6 +42,7 @@ class Comment
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank(message="Veuillez remplir le champ contenu")
      */
     private $content;
 
