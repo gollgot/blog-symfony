@@ -93,6 +93,18 @@
     font-size: 13px;
 }
 
+.right-container ul.category-list{
+    margin:0px;
+    padding:0px;
+}
+.right-container ul.category-list li{
+    margin: 0px 20px 10px 0px;
+    display: inline-block;
+}
+.right-container ul.category-list li a:hover{
+    color: #1194f6;
+}
+
 /* BUTTONS */
 button.btn-left {
     float:left;
