@@ -76,6 +76,36 @@ class PostController extends Controller
 	}
 
 	/**
+	 * Search a post include specific terms.
+	 * IMPORTANT : Have to be above showAction, because under it bug, it think that the /search is the /{id}
+	 *
+	 * @Route("/search", name="post_search")
+	 * @Method({"POST"})
+	 */
+	public function searchAction(Request $request)
+	{
+		$searchTerm = $request->request->get("term");
+
+		$em = $this->getDoctrine()->getManager();
+		// variables used in the right container (separated twig included in main twig)
+		$lastPosts = $em->getRepository('AppBundle:Post')->findBy(array(), array('createdAt' => 'DESC'), 3);
+		$categories = $em->getRepository("AppBundle:Category")->findBy(array(), array('name' => 'ASC'));
+
+		// Custom query, search in post.title the term %searchTerm% and I order by date, most recent first
+		$query = $em
+			->createQuery("SELECT u FROM AppBundle:Post u WHERE u.title LIKE :searchTerm OR u.content LIKE :searchTerm ORDER BY u.createdAt DESC")
+			->setParameter('searchTerm', '%'.$searchTerm."%");
+		$posts = $query->getResult();
+
+		return $this->render('post/search.html.twig', array(
+			'searchTerm' => $searchTerm,
+			'posts'      => $posts,
+			'lastPosts'  => $lastPosts,
+			'categories' => $categories,
+		));
+	}
+
+	/**
 	 * Finds and displays a post entity.
 	 *
 	 * @Route("/{id}", name="post_show")
@@ -197,4 +227,6 @@ class PostController extends Controller
 			->setMethod('DELETE')
 			->getForm();
 	}
+
+
 }

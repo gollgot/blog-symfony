@@ -65,6 +65,9 @@
     color:#666;
     text-transform: uppercase;
 }
+.right-container #searchForm {
+    margin-bottom:20px;
+}
 .right-container .last-post{
     margin-bottom: 20px;
 }

@@ -1,3 +1,10 @@
+<h4>Recherche</h4>
+
+<form id="searchForm" action="{{ path('post_search') }}" method="POST">
+    <input type="text" name="term" required placeholder="Ex: Tennis"/>
+    <button class="btn btn-primary">Rechercher</button>
+</form>
+
 <h4>Derniers articles</h4>
 
 {% for lastPost in lastPosts %}
