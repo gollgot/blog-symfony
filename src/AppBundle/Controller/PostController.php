@@ -88,7 +88,10 @@ class PostController extends Controller
 		$newCommentForm->handleRequest($request);
 
 		$em = $this->getDoctrine()->getManager();
+
+		// variables used in the right container (separated twig included in main twig)
 		$lastPosts = $em->getRepository('AppBundle:Post')->findBy(array(), array('createdAt' => 'DESC'), 3);
+		$categories = $em->getRepository("AppBundle:Category")->findBy(array(), array('name' => 'ASC'));
 
 		if ($newCommentForm->isSubmitted() && $newCommentForm->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -104,6 +107,7 @@ class PostController extends Controller
 			'post'           => $post,
 			'newCommentForm' => $newCommentForm->createView(),
 			'lastPosts'      => $lastPosts,
+			'categories'     => $categories,
 		));
 	}
 

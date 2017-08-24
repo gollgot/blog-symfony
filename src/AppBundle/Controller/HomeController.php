@@ -14,12 +14,15 @@ class HomeController extends Controller
 	public function indexAction()
 	{
 		$em = $this->getDoctrine()->getManager();
+
 		$posts = $em->getRepository('AppBundle:Post')->findBy(array(), array('createdAt' => 'DESC'));
 		$lastPosts = $em->getRepository('AppBundle:Post')->findBy(array(), array('createdAt' => 'DESC'), 3);
+		$categories = $em->getRepository('AppBundle:Category')->findBy(array(), array('name' => 'ASC'));
 
 		return $this->render('home/index.html.twig', [
-			'posts'     => $posts,
-			'lastPosts' => $lastPosts,
+			'posts'      => $posts,
+			'lastPosts'  => $lastPosts,
+			'categories' => $categories,
 		]);
 	}
 }

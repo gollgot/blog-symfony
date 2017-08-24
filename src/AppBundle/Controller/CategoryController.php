@@ -69,12 +69,16 @@ class CategoryController extends Controller
 		$postsOfCategory = $category->getPosts();
 
 		$em = $this->getDoctrine()->getManager();
+
+		// variables used in the right container (separated twig included in main twig)
 		$lastPosts = $em->getRepository('AppBundle:Post')->findBy(array(), array('createdAt' => 'DESC'), 3);
+		$categories = $em->getRepository("AppBundle:Category")->findBy(array(), array('name' => 'ASC'));
 
 		return $this->render('category/show.html.twig', array(
 			'category'        => $category,
 			'postsOfCategory' => $postsOfCategory,
 			'lastPosts'       => $lastPosts,
+			'categories'      => $categories,
 		));
 	}
 

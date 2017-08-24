@@ -21,10 +21,7 @@
 <h4>Catégories</h4>
 
 <ul class="category-list">
-    <li><a href="#">Catégorie 1</a></li>
-    <li><a href="#">Catégorie 2</a></li>
-    <li><a href="#">Catégorie 3</a></li>
-    <li><a href="#">Catégorie 4</a></li>
-    <li><a href="#">Catégorie 5</a></li>
-    <li><a href="#">Catégorie 6</a></li>
+    {% for category in categories %}
+        <li><a href="{{ path('categories_show', {'id': category.id}) }}">{{ category.name }}</a></li>
+    {% endfor %}
 </ul>

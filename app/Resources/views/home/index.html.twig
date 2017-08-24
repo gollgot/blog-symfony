@@ -49,7 +49,7 @@
 
         <div class="col-md-4">
             <div class="right-container">
-                {% include 'right_container.html.twig' with lastPosts %}
+                {% include 'right_container.html.twig' with {'lastPosts' : lastPosts, 'categories' : categories} %}
             </div>
         </div>
 
