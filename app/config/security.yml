@@ -6,16 +6,15 @@ security:
         Symfony\Component\Security\Core\User\User: plaintext
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN:   ROLE_WRITER
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
             memory:
                 users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    writer:  { password: writer, roles: [ 'ROLE_WRITER' ] }
+                    admin: { password: admin, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
