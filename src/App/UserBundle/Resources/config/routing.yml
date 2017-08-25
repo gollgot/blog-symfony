@@ -1,3 +1,4 @@
+# Authentifications
 login:
     path:   /login
     defaults:  { _controller: UserBundle:Security:login }
@@ -7,3 +8,8 @@ login_check:
 
 logout:
     path:   /logout
+
+# Controllers annotations
+controllers:
+    resource: "@UserBundle/Controller/"
+    type:     annotation

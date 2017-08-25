@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+
+    <h1>Tous les utilisateurs</h1>
+
+    <table id="table-post-index" class="table table-bordered table-hover table-responsive">
+        <thead>
+        <tr>
+            <th>Utilisateurs</th>
+            <th>Date de création</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.username}}</td>
+                <td title="TODO">TODO</td>
+                <td>{{ user.roles[0] }}</td>
+                <td>
+                    <a title="TODO" href="#"><button class="btn btn-success">Éditer</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="#">
+        <button class="btn btn-primary">Créer un utilisateur</button>
+    </a>
+
+{% endblock %}
