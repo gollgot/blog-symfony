@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping\OneToMany;
 /**
  * Role
  *
+ * !! All roles you assign to a user must begin with the ROLE_ prefix. Otherwise,
+ * they won't be handled by Symfony's security system in the normal way !!
+ *
  * @ORM\Table(name="role")
  * @ORM\Entity(repositoryClass="App\UserBundle\Repository\RoleRepository")
  */
