@@ -46,6 +46,13 @@ class User implements UserInterface
     private $salt;
 
 	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="created_at", type="datetime")
+	 */
+	private $createdAt;
+
+	/**
 	 * Many users has one roles
 	 * @ManyToOne(targetEntity="App\UserBundle\Entity\Role", inversedBy="users")
 	 * @JoinColumn(name="role_id", referencedColumnName="id")
@@ -134,6 +141,24 @@ class User implements UserInterface
     {
         return $this->salt;
     }
+
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
+	/**
+	 * @param \DateTime $createdAt
+	 */
+	public function setCreatedAt($createdAt)
+	{
+		$this->createdAt = $createdAt;
+	}
+
 
     /**
      * Set role

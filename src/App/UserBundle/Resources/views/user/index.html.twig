@@ -10,8 +10,8 @@
         <thead>
         <tr>
             <th>Utilisateur</th>
-            <th>Date de création</th>
             <th>Role</th>
+            <th>Date de création</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -19,8 +19,8 @@
         {% for user in users %}
             <tr>
                 <td>{{ user.username}}</td>
-                <td title="TODO">TODO</td>
                 <td>{{ user.roles[0] }}</td>
+                <td title="{{ user.createdAt|date('d.m.Y à H\\hi') }}">{{ user.createdAt|date('d.m.Y') }}</td>
                 <td>
                     <a title="TODO" href="#"><button class="btn btn-success">Éditer</button></a>
                 </td>
