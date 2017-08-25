@@ -21,7 +21,7 @@ class CategoryController extends Controller
 	 *
 	 * @Route("/", name="categories_index")
 	 * @Method("GET")
-	 * @Security("has_role('ROLE_ADMIN')")
+	 * @Security("has_role('ROLE_WRITER')")
 	 */
 	public function indexAction()
 	{
@@ -39,7 +39,7 @@ class CategoryController extends Controller
 	 *
 	 * @Route("/new", name="categories_new")
 	 * @Method({"GET", "POST"})
-	 * @Security("has_role('ROLE_ADMIN')")
+	 * @Security("has_role('ROLE_WRITER')")
 	 */
 	public function newAction(Request $request)
 	{
@@ -90,7 +90,7 @@ class CategoryController extends Controller
 	 *
 	 * @Route("/{id}/edit", name="categories_edit")
 	 * @Method({"GET", "POST"})
-	 * @Security("has_role('ROLE_ADMIN')")
+	 * @Security("has_role('ROLE_WRITER')")
 	 */
 	public function editAction(Request $request, Category $category)
 	{
@@ -116,7 +116,7 @@ class CategoryController extends Controller
 	 *
 	 * @Route("/{id}", name="categories_delete")
 	 * @Method("DELETE")
-	 * @Security("has_role('ROLE_ADMIN')")
+	 * @Security("has_role('ROLE_WRITER')")
 	 */
 	public function deleteAction(Request $request, Category $category)
 	{
