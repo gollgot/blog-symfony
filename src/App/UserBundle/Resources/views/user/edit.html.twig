@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Édition : {{ user.username }}{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('users_index') }}"><button class="btn btn-primary">Retour aux utilisateurs</button></a>
+    <br>
+    <br>
+
+    <h1>Édition de {{ user.username }}</h1>
+
+    {{ form_start(editForm) }}
+        {{ form_widget(editForm) }}
+        <button class="btn btn-success btn-left">Éditer</button>
+    {{ form_end(editForm) }}
+
+    {{ form_start(deleteForm) }}
+        <button class="btn btn-danger">Supprimer</button>
+    {{ form_end(deleteForm) }}
+
+{% endblock %}

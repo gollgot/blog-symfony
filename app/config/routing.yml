@@ -1,3 +1,8 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+# Import the routing file of the UserBundle
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+

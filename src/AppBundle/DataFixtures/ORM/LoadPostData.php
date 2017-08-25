@@ -17,7 +17,7 @@ class LoadPostData implements FixtureInterface {
 
     public function load(ObjectManager $manager){
 
-        for($i = 0; $i < 4; $i++){
+        /*for($i = 0; $i < 4; $i++){
             $post = new Post();
             $title = "Titre ".($i+1);
             $content = "Content ".($i+1);
@@ -27,7 +27,7 @@ class LoadPostData implements FixtureInterface {
             $manager->persist($post);
         }
 
-        $manager->flush();
+        $manager->flush();*/
     }
 
 }
