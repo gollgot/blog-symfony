@@ -38,6 +38,7 @@ class LoadUserData implements FixtureInterface {
 		foreach ($listNames as $name) {
 			$user = new User();
 			$user->setUsername($name);
+			$user->setCreatedAt(new \DateTime());
 			$user->setSalt(generateRandomString(20));
 			$rawPassword = $name;
 			// Symfony used rawPassword{salt} to generate password
@@ -48,6 +49,7 @@ class LoadUserData implements FixtureInterface {
 
 		$user = new User();
 		$user->setUsername('admin');
+		$user->setCreatedAt(new \DateTime());
 		$user->setSalt(generateRandomString(20));
 		$user->setRole($roleAdmin);
 		$rawPassword = 'admin';
