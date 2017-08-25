@@ -12,6 +12,35 @@ a:hover, a:active, a:visited, a:link{
 }
 
 
+body #top-nav{
+    height:40px;
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #E9E9E9;
+    color: #999;
+}
+body #top-nav .content{
+    padding: 6px 0px 0px 0px;
+    background-color: initial;
+    float: right;
+}
+body #top-nav .content a.login{
+    color: #999;
+    margin-right:10px;
+}
+body #top-nav .content a.login:hover{
+    color: #1194f6;
+}
+body #top-nav .content span.username{
+    text-transform: capitalize;
+    font-size: 15px;
+}
+body #top-nav .content button.logout{
+    padding: 2px 10px 2px 10px;
+    margin: 0px 6px 0px 6px;
+    font-size: 14px;
+}
+
+
 body header {
     background-color: #fff;
     height:100px;

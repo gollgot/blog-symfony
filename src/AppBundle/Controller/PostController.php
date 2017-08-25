@@ -22,6 +22,7 @@ class PostController extends Controller
 	 *
 	 * @Route("/", name="post_index")
 	 * @Method("GET")
+	 * @Security("has_role('ROLE_WRITER')")
 	 */
 	public function indexAction()
 	{
@@ -38,6 +39,7 @@ class PostController extends Controller
 	 *
 	 * @Route("/new", name="post_new")
 	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_WRITER')")
 	 */
 	public function newAction(Request $request)
 	{
@@ -147,6 +149,7 @@ class PostController extends Controller
 	 *
 	 * @Route("/{id}/edit", name="post_edit")
 	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_WRITER')")
 	 */
 	public function editAction(Request $request, Post $post)
 	{
@@ -199,6 +202,7 @@ class PostController extends Controller
 	 *
 	 * @Route("/{id}", name="post_delete")
 	 * @Method("DELETE")
+	 * @Security("has_role('ROLE_WRITER')")
 	 */
 	public function deleteAction(Request $request, Post $post)
 	{

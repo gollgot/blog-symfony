@@ -12,14 +12,28 @@
     </head>
     <body>
     <div class="container">
+        <div id="top-nav">
+            <div class="content">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <span class="username">{{ app.user.username }}</span>
+                    <a href="{{ path('logout') }}"><button class="btn btn-danger logout">Déconnexion</button></a>
+                {% else %}
+                    <a class="login" href="{{ path("login") }}">Connexion</a>
+                {% endif %}
+            </div>
+        </div>
         <header>
 
         </header>
         <nav>
             <ul>
                 <li><a href="{{ path("homepage") }}">Accueil</a></li>
-                <li><a href="{{ path("post_index") }}">Articles</a></li>
-                <li><a href="{{ path("categories_index") }}">Catégories</a></li>
+                {% if is_granted('ROLE_WRITER') %}
+                    <li><a href="{{ path("post_index") }}">Articles</a></li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path("categories_index") }}">Catégories</a></li>
+                {% endif %}
             </ul>
         </nav>
         <div class="content">
