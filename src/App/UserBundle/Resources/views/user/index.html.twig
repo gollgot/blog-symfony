@@ -6,7 +6,7 @@
 
     <h1>Tous les utilisateurs</h1>
 
-    <table id="table-post-index" class="table table-bordered table-hover table-responsive">
+    <table id="table-users-index" class="table table-bordered table-hover table-responsive">
         <thead>
         <tr>
             <th>Utilisateur</th>
@@ -22,7 +22,7 @@
                 <td>{{ user.roles[0] }}</td>
                 <td title="{{ user.createdAt|date('d.m.Y à H\\hi') }}">{{ user.createdAt|date('d.m.Y') }}</td>
                 <td>
-                    <a title="TODO" href="#"><button class="btn btn-success">Éditer</button></a>
+                    <a title="Éditer l'utilisateur {{ user.username }}" href="{{ path('users_edit', {'id' : user.id}) }}"><button class="btn btn-success">Éditer</button></a>
                 </td>
             </tr>
         {% endfor %}

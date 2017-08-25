@@ -69,6 +69,87 @@ class UserController extends Controller
 		));
 	}
 
+	/**
+	 * Displays a form to edit an existing user entity.
+	 *
+	 * @Route("/{id}/edit", name="users_edit")
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
+	 */
+	public function editAction(Request $request, User $user)
+	{
+		// Load a special form with delete method etc..
+		$deleteForm = $this->createDeleteForm($user);
+
+		// Edit form
+		$editForm = $this->createForm('App\UserBundle\Form\UserType', $user);
+		$editForm->handleRequest($request);
+
+		if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+			// generate a 20 length random salt in same method (sha 512) as symfony security encoders I defined
+			$user->setSalt($this->generateRandomString(20));
+			// Set and hash the password + salt
+			$user->setPassword(hash('sha512', $user->getPassword().'{'.$user->getSalt().'}'));
+
+			// Get the entityManager and flush the user object
+			$this->getDoctrine()->getManager()->flush();
+
+			return $this->redirectToRoute('users_index');
+		}
+
+		return $this->render('@User/user/edit.html.twig', [
+			'editForm'   => $editForm->createView(),
+			'deleteForm' => $deleteForm->createView(),
+			'user'       => $user,
+		]);
+	}
+
+	/**
+	 * Deletes a user entity.
+	 *
+	 * @Route("/{id}", name="users_delete")
+	 * @Method("DELETE")
+	 * @Security("has_role('ROLE_ADMIN')")
+	 */
+	public function deleteAction(Request $request, User $user)
+	{
+		$deleteForm = $this->createDeleteForm($user);
+		$deleteForm->handleRequest($request);
+
+		if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			$em->remove($user);
+			$em->flush();
+		}
+
+		return $this->redirectToRoute('users_index');
+	}
+
+
+
+
+	/**
+	 * Creates a form to delete a post entity.
+	 *
+	 * @param User $user The post entity
+	 *
+	 * @return \Symfony\Component\Form\Form The form
+	 */
+	private function createDeleteForm(User $user)
+	{
+		return $this->createFormBuilder()
+			->setAction($this->generateUrl('users_delete', array('id' => $user->getId())))
+			->setMethod('DELETE')
+			->getForm();
+	}
+
+	/**
+	 * Return a generate String
+	 *
+	 * @param int $length
+	 * @return bool|string
+	 */
 	private function generateRandomString($length = 10) {
 		return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 	}
