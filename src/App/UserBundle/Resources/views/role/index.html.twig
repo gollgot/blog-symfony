@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rôles{% endblock %}
+
+{% block body %}
+
+    <h1>Tous les rôles</h1>
+
+    <table id="table-roles-index" class="table table-bordered table-hover table-responsive">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for role in roles %}
+            <tr>
+                <td>{{ role.name[0]}}</td>
+                <td>
+                    <a title="Éditer le rôle {{ role.name[0] }}" href="#"><button class="btn btn-success">Éditer</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="#">
+        <button class="btn btn-primary">Créer un rôle</button>
+    </a>
+
+{% endblock %}
