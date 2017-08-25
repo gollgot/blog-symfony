@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -28,6 +29,11 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+	 * @Assert\Length(
+	 *      min = 3,
+	 *      minMessage = "Minimum 3 caractères"
+	 * )
+	 * @Assert\NotBlank(message="Ne doit pas être vide")
      */
     private $username;
 
@@ -35,6 +41,11 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
+	 * @Assert\Length(
+	 *      min = 3,
+	 *      minMessage = "Minimum 3 caractères"
+	 * )
+	 * @Assert\NotBlank(message="Ne doit pas être vide")
      */
     private $password;
 
