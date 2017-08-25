@@ -51,6 +51,7 @@ class UserController extends Controller
 		if ($userform->isSubmitted() && $userform->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
+			$user->setCreatedAt(new \DateTime());
 			// generate a 20 length random salt in same method (sha 512) as symfony security encoders I defined
 			$user->setSalt($this->generateRandomString(20));
 			// Set and hash the password + salt

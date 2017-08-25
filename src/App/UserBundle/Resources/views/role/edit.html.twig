@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Édition : {{ role.name[0] }}{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('roles_index') }}"><button class="btn btn-primary">Retour aux rôles</button></a>
+    <br>
+    <br>
+
+    <h1>Édition du role {{ role.name[0] }}</h1>
+
+    {{ form_start(editForm) }}
+        {{  form_widget(editForm) }}
+        <button class="btn btn-success btn-left">Éditer</button>
+    {{ form_end(editForm) }}
+
+    {% if role.users|length > 0 %}
+        <br><br><br>
+        <div class="alert alert-danger" role="alert">
+            Impossible de supprimer le role "{{ role.name[0] }}" car un ou plusieurs utilisateurs possèdent encore ce rôle. Pour pouvoir le supprimer, veuillez changer leur rôle.
+        </div>
+    {% else %}
+        {{ form_start(deleteForm) }}
+            <button class="btn btn-danger">Supprimer</button>
+        {{ form_end(deleteForm) }}
+    {% endif %}
+
+{% endblock %}
