@@ -69,6 +69,11 @@ class Role
     {
         return $this->name;
     }
+
+	public function getTest()
+	{
+		return $this->name[0];
+	}
     /**
      * Constructor
      */
@@ -110,4 +115,6 @@ class Role
     {
         return $this->users;
     }
+
+
 }
