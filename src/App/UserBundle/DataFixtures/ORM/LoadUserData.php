@@ -9,8 +9,8 @@
 namespace AppBundle\DataFixtures\ORM;
 
 
+use App\UserBundle\Entity\Role;
 use App\UserBundle\Entity\User;
-use AppBundle\Entity\Category;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -25,6 +25,15 @@ class LoadUserData implements FixtureInterface {
 			return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 		}
 
+		$roleAdmin = new Role();
+		$roleAdmin->setName(array('ROLE_ADMIN'));
+		$manager->persist($roleAdmin);
+
+		$roleWriter = new Role();
+		$roleWriter->setName(array('ROLE_WRITER'));
+		$manager->persist($roleWriter);
+
+
 		$listNames = array('jean', 'marine', 'anne');
 		foreach ($listNames as $name) {
 			$user = new User();
@@ -33,14 +42,14 @@ class LoadUserData implements FixtureInterface {
 			$rawPassword = $name;
 			// Symfony used rawPassword{salt} to generate password
 			$user->setPassword(hash('sha512', $rawPassword.'{'.$user->getSalt().'}'));
-			$user->setRoles(array('ROLE_WRITER'));
+			$user->setRole($roleWriter);
 			$manager->persist($user);
 		}
 
 		$user = new User();
 		$user->setUsername('admin');
 		$user->setSalt(generateRandomString(20));
-		$user->setRoles(array('ROLE_ADMIN'));
+		$user->setRole($roleAdmin);
 		$rawPassword = 'admin';
 		// Symfony used rawPassword{salt} to generate password
 		$user->setPassword(hash('sha512', $rawPassword.'{'.$user->getSalt().'}'));
