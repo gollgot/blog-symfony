@@ -30,7 +30,7 @@
                 </i>
             </div>
             <div class="post-resume">
-                {{ post.content|length > 180 ? post.content|slice(0, 180) ~ '...' : post.content }}
+                {{ post.content|length > 180 ? post.content | slice(0, 180) | striptags ~ '...' : post.content | striptags }}
             </div>
         </div>
     </div>

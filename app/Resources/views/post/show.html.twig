@@ -30,7 +30,7 @@
                     <img src="{{ asset('uploads/posts_images/' ~ post.image) }}" alt="image">
 
                     <div>
-                        {{ post.content }}
+                        {{ post.content | raw}}
                     </div>
 
                     <h2>{{ post.comments|length }} {{ post.comments|length > 1 ? "commentaires" : "commentaire" }}</h2>

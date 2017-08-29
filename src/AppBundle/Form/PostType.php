@@ -22,7 +22,8 @@ class PostType extends AbstractType
                 'label' => 'Titre',
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Contenu'
+                'label' => 'Contenu',
+				'required' => false // Mandatory because if it's true, bug when send with the WYSIWYG
             ])
             ->add('image', FileType::class, [
                 'label' => 'Image (jpg / png)',
