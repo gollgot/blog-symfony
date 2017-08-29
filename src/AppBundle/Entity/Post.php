@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -82,6 +83,13 @@ class Post
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
+
+	/**
+	 * Many Post has one User
+	 * @ORM\ManyToOne(targetEntity="App\UserBundle\Entity\User", inversedBy="posts")
+	 * @JoinColumn(name="author_id", referencedColumnName="id")
+	 */
+	private $author;
 
 
     /**
@@ -240,5 +248,29 @@ class Post
     {
         return $this->comments;
     }
+	
 
+    /**
+     * Set author
+     *
+     * @param \App\UserBundle\Entity\User $author
+     *
+     * @return Post
+     */
+    public function setAuthor(\App\UserBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \App\UserBundle\Entity\User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
 }

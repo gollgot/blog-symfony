@@ -5,6 +5,7 @@ namespace App\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -69,6 +70,12 @@ class User implements UserInterface
 	 * @JoinColumn(name="role_id", referencedColumnName="id")
 	 */
     private $role;
+
+	/**
+	 * One User has Many Posts.
+	 * @OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="author")
+	 */
+	private $posts;
 
 
     /**
@@ -229,4 +236,45 @@ class User implements UserInterface
 	{
 		// TODO: Implement eraseCredentials() method.
 	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add post
+     *
+     * @param \AppBundle\Entity\Post $post
+     *
+     * @return User
+     */
+    public function addPost(\AppBundle\Entity\Post $post)
+    {
+        $this->posts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post
+     *
+     * @param \AppBundle\Entity\Post $post
+     */
+    public function removePost(\AppBundle\Entity\Post $post)
+    {
+        $this->posts->removeElement($post);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
 }
