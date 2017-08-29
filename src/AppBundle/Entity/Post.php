@@ -87,7 +87,7 @@ class Post
 	/**
 	 * Many Post has one User
 	 * @ORM\ManyToOne(targetEntity="App\UserBundle\Entity\User", inversedBy="posts")
-	 * @JoinColumn(name="author_id", referencedColumnName="id")
+	 * @JoinColumn(name="author_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
 	 */
 	private $author;
 

@@ -21,7 +21,7 @@
             <tr>
                 <td>{{ post.title|length > 100 ? post.title|slice(0,100) ~ '...': post.title }}</td>
                 <td title="{{ post.createdAt|date('d.m.Y H:i:s') }}">{{ post.createdAt|date('d.m.Y') }}</td>
-                <td>{{ post.author.username }}</td>
+                <td>{{ post.author ? post.author.username : 'Inconnu' }}</td>
                 <td>{{ post.comments|length }}</td>
                 <td>
                     <a title="Voir l'article : {{ post.title }}" href="{{ path('post_show', { 'id' : post.id }) }}"><button class="btn btn-primary">Voir</button></a>
