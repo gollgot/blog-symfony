@@ -8,6 +8,5 @@ user:
 
 api:
     resource: "@ApiBundle/Controller/"
-    type:     annotation
+    type:     rest
     prefix:   api/
-

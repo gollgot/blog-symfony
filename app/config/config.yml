@@ -71,3 +71,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# FOS Rest Bundle Configuration
+fos_rest:
+    routing_loader:
+        include_format: false
