@@ -6,3 +6,8 @@ app:
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
 
+api:
+    resource: "@ApiBundle/Controller/"
+    type:     annotation
+    prefix:   api/
+
