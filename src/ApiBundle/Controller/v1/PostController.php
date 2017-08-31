@@ -1,6 +1,6 @@
 <?php
 
-namespace ApiBundle\Controller;
+namespace ApiBundle\Controller\v1;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

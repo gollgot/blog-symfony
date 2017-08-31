@@ -1,5 +1,10 @@
 # Routes of all api/* calls are defined in the controllers as annotations
-api_all:
-    resource: "@ApiBundle/Controller"
+api_v1:
+    resource: "@ApiBundle/Controller/v1"
     type:     annotation
-    prefix:   api/
+    prefix:   api/v1/
+
+api_v2:
+    resource: "@ApiBundle/Controller/v2"
+    type:     annotation
+    prefix:   api/v2/
