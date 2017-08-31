@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends Controller
 {
 	/**
-	 * @Route("/posts/")
+	 * @Route("/posts/", name="api_v2_get_posts")
 	 * @Method("GET")
 	 */
 	public function getPostsAction()
@@ -20,7 +20,7 @@ class PostController extends Controller
 	}
 
 	/**
-	 * @Route("/posts/{id}")
+	 * @Route("/posts/{id}", name="api_v2_get_post")
 	 * @Method("GET")
 	 */
 	public function getPostAction(Request $request)
