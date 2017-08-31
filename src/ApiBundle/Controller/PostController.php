@@ -2,18 +2,18 @@
 
 namespace ApiBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations\Get;
-
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends Controller
 {
 	/**
-	 * @Get("/posts/")
+	 * @Route("/posts/")
+	 * @Method("GET")
 	 */
 	public function getPostsAction()
 	{
@@ -47,7 +47,8 @@ class PostController extends Controller
 	}
 
 	/**
-	 * @Get("/posts/{id}")
+	 * @Route("/posts/{id}")
+	 * @Method("GET")
 	 */
 	public function getPostAction(Request $request)
 	{
