@@ -6,8 +6,7 @@
  * Time: 13:24
  */
 
-namespace ApiBundle\Controller\v1;
-
+namespace ApiBundle\Helpers;
 
 class apiHelpers
 {
@@ -18,7 +17,7 @@ class apiHelpers
 				// Header
 				$xml = '<?xml version="1.0" encoding="UTF-8"?>';
 				// Content
-				$xml .= '<error><code>$code</code><message>$message</message></error>';
+				$xml .= '<error><code>'.$code.'</code><message>'.$message.'</message></error>';
 				$response->setContent($xml);
 				// Set the header "Content-Type" to the http response
 				$response->headers->set('Content-Type', 'application/xml');
@@ -33,7 +32,7 @@ class apiHelpers
 						'message' => $message,
 					],
 				];
-				$response->setContent($json);
+				$response->setContent(json_encode($json));
 				// Set the header "Content-Type" to the http response
 				$response->headers->set('Content-Type', 'application/json');
 				return $response;
