@@ -38,7 +38,7 @@ class PostController extends Controller
 						// Author of the post
 						if (!empty($post->getAuthor())) {
 							$author = $post->getAuthor();
-							$xmlAuthor = '<author><id>'.$author->getId().'</id><username>'.$author->getUsername().'</username></author>';
+							$xmlAuthor = '<author><username>'.$author->getUsername().'</username></author>';
 						}else{
 							$xmlAuthor = '<author></author>';
 						}
@@ -64,7 +64,6 @@ class PostController extends Controller
 						if (!empty($post->getAuthor())) {
 							$author = $post->getAuthor();
 							$authorArray = [
-								'id'   => $author->getId(),
 								'name' => $author->getUsername()
 							];
 						} else {
@@ -111,7 +110,7 @@ class PostController extends Controller
 					// Author of the post
 					if (!empty($post->getAuthor())) {
 						$author = $post->getAuthor();
-						$xmlAuthor = '<author><id>'.$author->getId().'</id><username>'.$author->getUsername().'</username></author>';
+						$xmlAuthor = '<author><username>'.$author->getUsername().'</username></author>';
 					}else{
 						$xmlAuthor = '<author></author>';
 					}
@@ -137,7 +136,6 @@ class PostController extends Controller
 					if (!empty($post->getAuthor())) {
 						$author = $post->getAuthor();
 						$authorArray = [
-							'id'   => $author->getId(),
 							'name' => $author->getUsername()
 						];
 					} else {

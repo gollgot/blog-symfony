@@ -26,7 +26,7 @@ class CategoryController extends Controller
 			// user want a XML response
 			case 'application/xml':
 				// The Categories doesn't exists => create response with error message and the status code 404
-				if (empty($categorie)) {
+				if (empty($categories)) {
 					return apiHelpers::displayError('xml', 404, 'Categories not found', new Response('',Response::HTTP_NOT_FOUND));
 				}
 				// The categories exists
@@ -35,7 +35,7 @@ class CategoryController extends Controller
 					$xml = '<?xml version="1.0" encoding="UTF-8"?>';
 					$xml .= '<categories>';
 					foreach ($categories as $category) {
-						$xml .= '<categorie><id>'.$category->getId().'</id><name>'.$category->getName().'</name></categorie>';
+						$xml .= '<categorie><id>'.$category->getId().'</id><name>'.$category->getName().'</name><posts-number>'.sizeof($category->getPosts()).'</posts-number></categorie>';
 					}
 					$xml .= '</categories>';
 					$response = new Response($xml, Response::HTTP_OK);
@@ -52,11 +52,12 @@ class CategoryController extends Controller
 				}
 				// The post exists
 				else {
-					foreach ($categories as $categorie) {
+					foreach ($categories as $category) {
 						// All formated datas
 						$json[] = [
-							'id'         => $categorie->getId(),
-							'name'      => $categorie->getName(),
+							'id'           => $category->getId(),
+							'name'         => $category->getName(),
+							'posts-number' => sizeof($category->getPosts()),
 						];
 					}
 					$response = new JsonResponse($json, Response::HTTP_OK);
