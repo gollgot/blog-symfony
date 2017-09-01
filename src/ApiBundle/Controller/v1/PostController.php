@@ -24,15 +24,14 @@ class PostController extends Controller
 		switch($request->headers->get('accept')){
 			// user want a XML response
 			case 'application/xml':
-				// Header
-				$xml = '<?xml version="1.0" encoding="UTF-8"?>';
 				// The Post doesn't exists => create response with error message and the status code 404
 				if (empty($posts)) {
-					$xml .= '<error><code>404</code><message>Posts not found</message></error>';
-					$response = new Response($xml, Response::HTTP_NOT_FOUND);
+					return apiHelpers::displayError('xml', 404, 'Posts not found', new Response('',Response::HTTP_NOT_FOUND));
 				}
 				// The posts exists
 				else{
+					// Header
+					$xml = '<?xml version="1.0" encoding="UTF-8"?>';
 					$xml .= '<posts>';
 					foreach ($posts as $post) {
 						// Author of the post
@@ -46,24 +45,16 @@ class PostController extends Controller
 					}
 					$xml .= '</posts>';
 					$response = new Response($xml, Response::HTTP_OK);
+					// Set the header "Content-Type" to the http response
+					$response->headers->set('Content-Type', 'application/xml');
+					return $response;
 				}
-
-				// Set the header "Content-Type" to the http response
-				$response->headers->set('Content-Type', 'application/xml');
-				return $response;
 				break;
 			// Default response in JSON
 			default:
 				// The Post doesn't exists => create response with error message and the status code 404
 				if (empty($posts)) {
-					$json = [
-						'error' => [
-							'code'    => '404',
-							'message' => 'Posts not found',
-						],
-					];
-
-					$response = new JsonResponse($json, Response::HTTP_NOT_FOUND);
+					return apiHelpers::displayError('json', 404, 'Posts not found', new JsonResponse('', Response::HTTP_OK));
 				}
 				// The post exists
 				else {
@@ -88,11 +79,11 @@ class PostController extends Controller
 						];
 
 						$response = new JsonResponse($json, Response::HTTP_OK);
+						// Set the header "Content-Type" to the http response
+						$response->headers->set('Content-Type', 'application/json');
+						return $response;
 					}
 				}
-				// Set the header "Content-Type" to the http response
-				$response->headers->set('Content-Type', 'application/json');
-				return $response;
 				break;
 		}
 	}
