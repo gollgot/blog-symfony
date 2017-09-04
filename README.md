@@ -22,7 +22,7 @@ These ressouces are private. To access them, you must have an account on the web
 
 1. You have to authenticate to the API and get a token. To do that call the url : **myUrl/api/v1/auth** with a specific http header : Authorization => Basic base64(username:password) (e.g : Basic dGVzdDp0ZXN0). In production **you must use https over that**. If your credentials are good, the api will return your token (24 hours limited time). Each time your token will expired you have to do this process again (a "401 token expired" error will display if the token expired).
 
-2. Call one of the url below this text with your token in the http header **x-Auth-Token**.
+2. Call one of the url below this text with your token in the http header **X-Auth-Token**.
 
 - **[POST]** myUrl/api/v1/categories?token={token}.....................................-> Create a new categorie
   - Params : name = name | content = name of the categorie you want to create
