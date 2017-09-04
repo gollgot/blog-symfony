@@ -59,6 +59,7 @@ class PostController extends Controller
 				}
 				// The post exists
 				else {
+					$json = [];
 					foreach ($posts as $post) {
 						// Author of the post
 						if (!empty($post->getAuthor())) {
@@ -77,12 +78,11 @@ class PostController extends Controller
 							'created_at' => $post->getCreatedAt()->format('Y-m-d H:i'),
 							'author'     => $authorArray,
 						];
-
-						$response = new JsonResponse($json, Response::HTTP_OK);
-						// Set the header "Content-Type" to the http response
-						$response->headers->set('Content-Type', 'application/json');
-						return $response;
 					}
+					$response = new JsonResponse($json, Response::HTTP_OK);
+					// Set the header "Content-Type" to the http response
+					$response->headers->set('Content-Type', 'application/json');
+					return $response;
 				}
 				break;
 		}
