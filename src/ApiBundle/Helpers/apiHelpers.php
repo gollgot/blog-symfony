@@ -13,6 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class apiHelpers
 {
+	/**
+	 * @param $format "The return formats (xml or json)"
+	 * @param $code "The http code"
+	 * @param $message "The message will display"
+	 * @param $response "The Response object"
+	 * @return mixed "The Response object with all datas"
+	 */
 	public static function displayError($format, $code, $message, $response){
 		switch ($format){
 			// user want a XML response
