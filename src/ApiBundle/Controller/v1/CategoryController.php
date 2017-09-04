@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class CategoryController extends Controller
 {
@@ -73,70 +74,79 @@ class CategoryController extends Controller
 	/**
 	 * Creates a new category entity.
 	 *
-	 * @Route("/categories/", name="api_v1_post_category")
+	 * @Route("/categories", name="api_v1_post_category")
 	 * @Method({"POST"})
 	 */
 	public function postCategoryAction(Request $request)
 	{
-		$name = $request->get('name');
-		// Error name is empty
-		if(empty($name)){
-			// Get the "Accept" param in the http headers request from the client
-			switch($request->headers->get('accept')){
-				// user want a XML response
-				case 'application/xml':
-					$xml = '<?xml version="1.0" encoding="UTF-8"?>';
-					$xml .= '<errors><error><type>blank</type><attribut>name</attribut><message>name cannot be blank</message></error></errors>';
-					$response = new Response($xml, Response::HTTP_BAD_REQUEST);
-					// Set the header "Content-Type" to the http response
-					$response->headers->set('Content-Type', 'application/xml');
-					break;
-				// Default response in JSON
-				default:
-					$json['errors'][] = [
-						'type'     => 'blank',
-						'attribut' => 'name',
-						'message'  => 'name cannot be blank',
-					];
-					$response = new JsonResponse($json, Response::HTTP_BAD_REQUEST);
-					// Set the header "Content-Type" to the http response
-					$response->headers->set('Content-Type', 'application/json');
-					break;
-			}
+		$em = $this->getDoctrine()->getManager();
+		// Error with the Api Token found
+		if(apiHelpers::getTokenError($request, $em) != null){
+			// Return the error found in the method
+			return apiHelpers::getTokenError($request, $em);
 		}
-		// Success, no errors
+		// Api Token is OK
 		else{
-			$category = new Category();
-			$category->setName($name);
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($category);
-			$em->flush();
-			// Get the "Accept" param in the http headers request from the client
-			switch($request->headers->get('accept')){
-				// user want a XML response
-				case 'application/xml':
-					$xml = '<?xml version="1.0" encoding="UTF-8"?>';
-					$xml .= '<success><code>201</code><message>New category has been created</message></success>';
-					$response = new Response($xml, Response::HTTP_CREATED);
-					// Set the header "Content-Type" to the http response
-					$response->headers->set('Content-Type', 'application/xml');
-					break;
-				// Default response in JSON
-				default:
-					$json = [
-						'success' => [
-							'code'    => 201,
-							'message' => 'New category has been created',
-						],
-					];
-					$response = new JsonResponse($json, Response::HTTP_CREATED);
-					// Set the header "Content-Type" to the http response
-					$response->headers->set('Content-Type', 'application/json');
-					break;
+			$name = $request->get('name');
+			// Error name is empty
+			if(empty($name)){
+				// Get the "Accept" param in the http headers request from the client
+				switch($request->headers->get('accept')){
+					// user want a XML response
+					case 'application/xml':
+						$xml = '<?xml version="1.0" encoding="UTF-8"?>';
+						$xml .= '<errors><error><type>blank</type><attribut>name</attribut><message>name cannot be blank</message></error></errors>';
+						$response = new Response($xml, Response::HTTP_BAD_REQUEST);
+						// Set the header "Content-Type" to the http response
+						$response->headers->set('Content-Type', 'application/xml');
+						break;
+					// Default response in JSON
+					default:
+						$json['errors'][] = [
+							'type'     => 'blank',
+							'attribut' => 'name',
+							'message'  => 'name cannot be blank',
+						];
+						$response = new JsonResponse($json, Response::HTTP_BAD_REQUEST);
+						// Set the header "Content-Type" to the http response
+						$response->headers->set('Content-Type', 'application/json');
+						break;
+				}
 			}
-		}
+			// Success, no errors
+			else{
+				$category = new Category();
+				$category->setName($name);
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($category);
+				$em->flush();
+				// Get the "Accept" param in the http headers request from the client
+				switch($request->headers->get('accept')){
+					// user want a XML response
+					case 'application/xml':
+						$xml = '<?xml version="1.0" encoding="UTF-8"?>';
+						$xml .= '<success><code>201</code><message>New category has been created</message></success>';
+						$response = new Response($xml, Response::HTTP_CREATED);
+						// Set the header "Content-Type" to the http response
+						$response->headers->set('Content-Type', 'application/xml');
+						break;
+					// Default response in JSON
+					default:
+						$json = [
+							'success' => [
+								'code'    => 201,
+								'message' => 'New category has been created',
+							],
+						];
+						$response = new JsonResponse($json, Response::HTTP_CREATED);
+						// Set the header "Content-Type" to the http response
+						$response->headers->set('Content-Type', 'application/json');
+						break;
+				}
+			}
 
-		return $response;
+			return $response;
+		}
 	}
 
 }
