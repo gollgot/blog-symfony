@@ -12,10 +12,12 @@ As a REST API, it can return datas in 2 formats : **JSON** and **XML**. The plat
 ### Public API
 Some ressources are public (don't need authentification), you just have to type one of the url below this text and you will have a response.
 
-- **[GET]** myUrl/api/v1/posts.....................................-> All posts
-- **[GET]** myUrl/api/v1/posts/{id}..............................-> One specific post
-- **[GET]** myUrl/api/v1/categories............................-> All categories
-- **[GET]** myUrl/api/v1/categories/{id}/posts........-> All posts contain in a specific categorie
+| Path                               | Method   | Summary                                   |
+| ---------------------------------- | -------- | ----------------------------------------- |
+| .../api/v1/posts                   | GET      | All posts                                 |
+| .../api/v1/posts/{id}              | GET      | One specific post                         |
+| .../api/v1/categories              | GET      | All categories                            |
+| .../api/v1/categories/{id}/posts   | GET      | All posts contain in a specific categorie |
 
 ### Private API
 These ressouces are private. To access them, you must have an account on the website (no specific role), and get a token from the API to prove your entity when you send your request to see private ressources.
@@ -24,8 +26,10 @@ These ressouces are private. To access them, you must have an account on the web
 
 2. Call one of the url below this text with your token in the http header **X-Auth-Token**.
 
-- **[POST]** myUrl/api/v1/categories?token={token}.....................................-> Create a new categorie
-  - Params : name = name | content = name of the categorie you want to create
+| Path                       | Method | Summary                 | HTTP Headers            | POST params             |
+| -------------------------- | ------ | ----------------------- | ----------------------- | ----------------------- |
+| .../api/v1/categories      | POST   | Create a new category   | X-Auth-Token : {token}  | name : {category name}  |
+
 
 ## Technical Documentation
 You can find all technical documentation to understand and continu the project on the [wiki page](https://github.com/gollgot/blog-symfony/wiki).
