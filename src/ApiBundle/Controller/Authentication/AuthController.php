@@ -87,7 +87,7 @@ class AuthController extends Controller
 					$token = $this->generateToken();
 					$apiToken->setToken($token);
 					$apiToken->setCreatedAt(new \DateTime());
-					$apiToken->setExpireAt($apiToken->getCreatedAt()->getTimestamp() + 24 * 3600);
+					$apiToken->setExpireAt($apiToken->getCreatedAt()->getTimestamp() + apiHelpers::$TOKEN_EXPIRATION_TIME);
 					$apiToken->setUser($user);
 					// Save it
 					$em->persist($apiToken);

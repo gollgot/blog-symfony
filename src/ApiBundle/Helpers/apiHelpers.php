@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class apiHelpers
 {
+	// The token expire after this time (24hours)
+	public static $TOKEN_EXPIRATION_TIME = 24 * 3600;
+
 	/**
 	 * @param $format "The return formats (xml or json)"
 	 * @param $code "The http code"
