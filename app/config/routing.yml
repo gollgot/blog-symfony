@@ -1,8 +1,12 @@
+# Main Application routes are defined in all controller as annotations
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-# Import the routing file of the UserBundle
+# User / authentification at backend routes are defined in the routing file of the UserBundle
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
 
+# api routes are defined in the routing file of the ApiBundle
+api:
+    resource: "@ApiBundle/Resources/config/routing.yml"

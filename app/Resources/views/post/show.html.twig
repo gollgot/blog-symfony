@@ -14,6 +14,8 @@
                     <div class="post-meta">
                         <i>Posté le : {{ post.createdAt|date('d.m.Y à H\\hi') }}</i>
                         <br>
+                        <i>Auteur : {{ post.author ? post.author.username : 'Inconnu' }}</i>
+                        <br>
                         <i>Catégories :
                             {% if post.categories is not empty %}
                                 {% for category in post.categories %}
@@ -28,7 +30,7 @@
                     <img src="{{ asset('uploads/posts_images/' ~ post.image) }}" alt="image">
 
                     <div>
-                        {{ post.content }}
+                        {{ post.content | raw}}
                     </div>
 
                     <h2>{{ post.comments|length }} {{ post.comments|length > 1 ? "commentaires" : "commentaire" }}</h2>

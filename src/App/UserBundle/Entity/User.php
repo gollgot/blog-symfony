@@ -5,6 +5,8 @@ namespace App\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -69,6 +71,18 @@ class User implements UserInterface
 	 * @JoinColumn(name="role_id", referencedColumnName="id")
 	 */
     private $role;
+
+	/**
+	 * One User has Many Posts.
+	 * @OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="author")
+	 */
+	private $posts;
+
+	/**
+	 * One user has one api token.
+	 * @OneToOne(targetEntity="App\UserBundle\Entity\ApiToken", mappedBy="user", cascade={"remove"})
+	 */
+	private $apiToken;
 
 
     /**
@@ -229,4 +243,69 @@ class User implements UserInterface
 	{
 		// TODO: Implement eraseCredentials() method.
 	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add post
+     *
+     * @param \AppBundle\Entity\Post $post
+     *
+     * @return User
+     */
+    public function addPost(\AppBundle\Entity\Post $post)
+    {
+        $this->posts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post
+     *
+     * @param \AppBundle\Entity\Post $post
+     */
+    public function removePost(\AppBundle\Entity\Post $post)
+    {
+        $this->posts->removeElement($post);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * Set apiToken
+     *
+     * @param \App\UserBundle\Entity\ApiToken $apiToken
+     *
+     * @return User
+     */
+    public function setApiToken(\App\UserBundle\Entity\ApiToken $apiToken = null)
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    /**
+     * Get apiToken
+     *
+     * @return \App\UserBundle\Entity\ApiToken
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
 }

@@ -79,7 +79,7 @@ class CategoryController extends Controller
 
 		return $this->render('category/show.html.twig', array(
 			'category'        => $category,
-			'postsOfCategory' => $postsOfCategory,
+			'posts' => $postsOfCategory,
 			'lastPosts'       => $lastPosts,
 			'categories'      => $categories,
 		));

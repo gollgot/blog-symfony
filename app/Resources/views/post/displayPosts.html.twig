@@ -1,0 +1,37 @@
+{% for post in posts %}
+    <div class="row post">
+        <div class="col-md-5">
+            <div class="img-container">
+                <a href="{{ path('post_show', {'id' : post.id}) }}">
+                    <img src="{{ asset('uploads/posts_images/' ~ post.image) }}" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <h2 class="post-title">
+                <a href="{{ path('post_show', {'id' : post.id}) }}">
+                    {{ post.title|length > 70 ? post.title|slice(0,70) ~ '...' : post.title }}
+                </a>
+            </h2>
+            <div class="post-meta">
+                <i>Posté le : {{ post.createdAt|date('d.m.Y à H\\hi') }} | {{ post.comments|length }} {{ post.comments|length > 1 ? 'commentaires' : 'commentaire' }}</i>
+                <br>
+                <i>Auteur : {{ post.author ? post.author.username : 'Inconnu' }}</i>
+                <br>
+                <i>
+                    {{ post.categories|length > 1 ? 'Catégories :' : 'Catégorie :'}}
+                    {% if post.categories is not empty %}
+                        {% for category in post.categories %}
+                            <u><a href="{{ path('categories_show', {'id' : category.id}) }}"></s>{{ category.name }}</a></u>
+                        {% endfor %}
+                    {% else %}
+                        Aucune
+                    {% endif %}
+                </i>
+            </div>
+            <div class="post-resume">
+                {{ post.content|length > 180 ? post.content | striptags | slice(0, 180) ~ '...': post.content | striptags }}
+            </div>
+        </div>
+    </div>
+{% endfor %}

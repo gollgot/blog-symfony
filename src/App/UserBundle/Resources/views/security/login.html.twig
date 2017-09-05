@@ -7,7 +7,7 @@
 
     {# S'il y a une erreur, on l'affiche dans un joli cadre #}
     {% if error %}
-        <div class="alert alert-danger">{{ error.message }}</div>
+        <div class="alert alert-danger">{{ error.message|trans }}</div>
     {% endif %}
 
     {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}

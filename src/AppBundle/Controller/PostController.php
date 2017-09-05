@@ -51,6 +51,7 @@ class PostController extends Controller
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$post->setCreatedAt(new \DateTime);
+			$post->setAuthor($this->get('security.token_storage')->getToken()->getUser());
 
 			/* IMAGE UPLOAD */
 			// The file object

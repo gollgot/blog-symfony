@@ -22,3 +22,14 @@
     </section>
 
 {% endblock %}
+
+
+{% block specificJS %}
+    <script type="text/javascript">
+        new nicEditor({
+            iconsPath : '/js/lib/img/nicEditorIcons.gif',
+            fullPanel : true,
+            maxHeight : 300
+        }).panelInstance('appbundle_post_content');
+    </script>
+{% endblock %}
