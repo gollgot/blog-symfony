@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -44,7 +45,7 @@ class UserController extends Controller
 	public function newAction(Request $request)
 	{
 		$user = new User();
-		$userform = $this->createForm('App\UserBundle\Form\UserType', $user);
+		$userform = $this->createForm('App\UserBundle\Form\UserNewType', $user);
 		$userform->handleRequest($request);
 
 		// If the form has been subitted, and data is valid, create the new user and redirect
@@ -79,25 +80,36 @@ class UserController extends Controller
 	 */
 	public function editAction(Request $request, User $user)
 	{
-		// Load a special form with delete method etc..
-		$deleteForm = $this->createDeleteForm($user);
+		// Mandatory, because when I post the form, $user->getPassword() take form passform field data...
+		$userHashPassword = $user->getPassword();
 
 		// Edit form
-		$editForm = $this->createForm('App\UserBundle\Form\UserType', $user);
+		$editForm = $this->createForm('App\UserBundle\Form\UserEditType', $user);
 		$editForm->handleRequest($request);
 
-		if ($editForm->isSubmitted() && $editForm->isValid()) {
+		if ($editForm->isSubmitted()) {
+			/* CUSTOM ERROR HANDLING -> check if the old password field match to the user's password */
+			$rawOldPassword = $request->request->get('app_userbundle_user')['oldPassword'];
+			$oldPassword = hash('sha512', $rawOldPassword.'{'.$user->getSalt().'}');
+			if($oldPassword != $userHashPassword){
+				$editForm->addError(new FormError('Mot de passe actuel ne correspond pas à votre mot de passe'));
+			}
 
-			// generate a 20 length random salt in same method (sha 512) as symfony security encoders I defined
-			$user->setSalt($this->generateRandomString(20));
-			// Set and hash the password + salt
-			$user->setPassword(hash('sha512', $user->getPassword().'{'.$user->getSalt().'}'));
+			if($editForm->isValid()){
+				// generate a 20 length random salt in same method (sha 512) as symfony security encoders I defined
+				$user->setSalt($this->generateRandomString(20));
+				// Set and hash the password + salt
+				$user->setPassword(hash('sha512', $user->getPassword().'{'.$user->getSalt().'}'));
 
-			// Get the entityManager and flush the user object
-			$this->getDoctrine()->getManager()->flush();
+				// Get the entityManager and flush the user object
+				$this->getDoctrine()->getManager()->flush();
 
-			return $this->redirectToRoute('users_index');
+				return $this->redirectToRoute('users_index');
+			}
 		}
+
+		// Load a special form with delete method etc..
+		$deleteForm = $this->createDeleteForm($user);
 
 		return $this->render('@User/user/edit.html.twig', [
 			'editForm'   => $editForm->createView(),
@@ -126,7 +138,6 @@ class UserController extends Controller
 
 		return $this->redirectToRoute('users_index');
 	}
-
 
 
 

@@ -10,8 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
-class UserType extends AbstractType
+class UserEditType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,12 +23,17 @@ class UserType extends AbstractType
 			->add('username', TextType::class, [
 				'label' => 'Utilisateur'
 			])
+			->add('oldPassword', PasswordType::class,[
+				'mapped' => false,
+				'label'  => 'Mot de passe actuel',
+				'required' => false,
+			])
 			->add('password', RepeatedType::class, [
 				'type' => PasswordType::class,
 				'invalid_message' => 'Les mot de passes doivent correspondre',
 				'options' => array('attr' => array('class' => 'password-field')),
 				'required' => true,
-				'first_options'  => array('label' => 'Mot de passe'),
+				'first_options'  => array('label' => 'Nouveau mot de passe'),
 				'second_options' => array('label' => 'Répétez le mot de passe'),
 			])
 			->add('role', EntityType::class, [
