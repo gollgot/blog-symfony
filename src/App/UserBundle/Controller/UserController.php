@@ -80,24 +80,53 @@ class UserController extends Controller
 	 */
 	public function editAction(Request $request, User $user)
 	{
-		// Mandatory, because when I post the form, $user->getPassword() take form passform field data...
-		$userHashPassword = $user->getPassword();
-
 		// Edit form
 		$editForm = $this->createForm('App\UserBundle\Form\UserEditType', $user);
 		$editForm->handleRequest($request);
 
-		if ($editForm->isSubmitted()) {
+		if ($editForm->isSubmitted() && $editForm->isValid()) {
+			$this->getDoctrine()->getManager()->flush();
+			return $this->redirectToRoute('users_index');
+		}
+
+		// Load a special form with delete method etc..
+		$deleteForm = $this->createDeleteForm($user);
+
+		return $this->render('@User/user/edit.html.twig', [
+			'editForm'   => $editForm->createView(),
+			'deleteForm' => $deleteForm->createView(),
+			'user'       => $user,
+		]);
+	}
+
+	/**
+	 * Displays a form to edit an existing user's password.
+	 *
+	 * @Route("/{id}/edit/password", name="users_edit_password")
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
+	 */
+	public function editPasswordAction(Request $request, User $user)
+	{
+		// Mandatory, because when I post the form, $user->getPassword() take form passform field data...
+		$userHashPassword = $user->getPassword();
+
+		// Edit form
+		$passwordForm = $this->createForm('App\UserBundle\Form\UserPasswordType', $user);
+		$passwordForm->handleRequest($request);
+
+		if ($passwordForm->isSubmitted()) {
 			/* CUSTOM ERROR HANDLING -> check if the old password field match to the user's password */
 			$rawOldPassword = $request->request->get('app_userbundle_user')['oldPassword'];
 			$oldPassword = hash('sha512', $rawOldPassword.'{'.$user->getSalt().'}');
 			if($oldPassword != $userHashPassword){
-				$editForm->addError(new FormError('Mot de passe actuel ne correspond pas à votre mot de passe'));
+				$passwordForm->addError(new FormError('Mot de passe actuel ne correspond pas à votre mot de passe'));
 			}
 
-			if($editForm->isValid()){
+			if($passwordForm->isValid()){
 				// generate a 20 length random salt in same method (sha 512) as symfony security encoders I defined
 				$user->setSalt($this->generateRandomString(20));
+
 				// Set and hash the password + salt
 				$user->setPassword(hash('sha512', $user->getPassword().'{'.$user->getSalt().'}'));
 
@@ -108,12 +137,8 @@ class UserController extends Controller
 			}
 		}
 
-		// Load a special form with delete method etc..
-		$deleteForm = $this->createDeleteForm($user);
-
-		return $this->render('@User/user/edit.html.twig', [
-			'editForm'   => $editForm->createView(),
-			'deleteForm' => $deleteForm->createView(),
+		return $this->render('@User/user/editPassword.html.twig', [
+			'passwordForm'   => $passwordForm->createView(),
 			'user'       => $user,
 		]);
 	}
@@ -150,54 +175,77 @@ class UserController extends Controller
 	{
 		// Connected user
 		$user = $this->get('security.token_storage')->getToken()->getUser();
-		// Mandatory, because when I post the form, $user->getPassword() take form password field data...
-		$userHashPassword = $user->getPassword();
 		$oldRole = $user->getRole();
 		// Edit form
 		$profileForm = $this->createForm('App\UserBundle\Form\UserProfileType', $user);
 		$profileForm->handleRequest($request);
 
-		// Form submitted
-		if ($profileForm->isSubmitted()) {
+		if ($profileForm->isSubmitted() && $profileForm->isValid()) {
+			$this->getDoctrine()->getManager()->flush();
+			// If we change the role FROM admin TO an other role as admin -> logout to prevent cache problems
+			if($oldRole->getName()[0] == 'ROLE_ADMIN' && $user->getRole()->getName()[0] != 'ROLE_ADMIN'){
+				return $this->redirectToRoute('logout');
+			}else{
+				return $this->redirectToRoute('users_index');
+			}
+			return $this->redirectToRoute('users_profile');
+		}
+
+		// Load a special form with delete method etc..
+		$deleteForm = $this->createDeleteForm($user);
+
+		return $this->render('@User/user/profile.html.twig', [
+			'profileForm'   => $profileForm->createView(),
+			'deleteForm' => $deleteForm->createView(),
+			'user'       => $user,
+		]);
+	}
+
+	/**
+	 * Displays a form to edit the profile (user connected) password.
+	 *
+	 * @Route("/profile/password", name="users_profile_password")
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_WRITER')")
+	 */
+	public function profilePasswordAction(Request $request)
+	{
+		// Connected user
+		$user = $this->get('security.token_storage')->getToken()->getUser();
+		// Mandatory, because when I post the form, $user->getPassword() take form passform field data...
+		$userHashPassword = $user->getPassword();
+
+		// Edit form
+		$passwordForm = $this->createForm('App\UserBundle\Form\UserPasswordType', $user);
+		$passwordForm->handleRequest($request);
+
+		if ($passwordForm->isSubmitted()) {
 			/* CUSTOM ERROR HANDLING -> check if the old password field match to the user's password */
 			$rawOldPassword = $request->request->get('app_userbundle_user')['oldPassword'];
 			$oldPassword = hash('sha512', $rawOldPassword.'{'.$user->getSalt().'}');
 			if($oldPassword != $userHashPassword){
-				$profileForm->addError(new FormError('Mot de passe actuel ne correspond pas à votre mot de passe'));
+				$passwordForm->addError(new FormError('Mot de passe actuel ne correspond pas à votre mot de passe'));
 			}
 
-			// Form is valid
-			if($profileForm->isValid()){
-
-				// If no role submit (not admin user)
-				if(empty($request->request->get('app_userbundle_user')['role'])){
-					$user->setRole($oldRole); // Set the old role
-				}
+			if($passwordForm->isValid()){
 				// generate a 20 length random salt in same method (sha 512) as symfony security encoders I defined
 				$user->setSalt($this->generateRandomString(20));
+
 				// Set and hash the password + salt
 				$user->setPassword(hash('sha512', $user->getPassword().'{'.$user->getSalt().'}'));
 
 				// Get the entityManager and flush the user object
 				$this->getDoctrine()->getManager()->flush();
-				// If we change FROM admin role TO not admin role, we logout. This way role session is reloaded
-				if($oldRole->getName()[0] == "ROLE_ADMIN" && $user->getRoles()[0] != "ROLE_ADMIN"){
-					return $this->redirectToRoute('logout');
-				}else {
-					return $this->redirectToRoute('users_profile');
-				}
+
+				return $this->redirectToRoute('users_profile');
 			}
 		}
 
-		// Prevent error, if form not valid, just set the oldRole to the user
-		$user->setRole($oldRole);
-
-		return $this->render('@User/user/profile.html.twig', [
-			'profileForm'   => $profileForm->createView(),
+		return $this->render('@User/user/editPassword.html.twig', [
+			'passwordForm'   => $passwordForm->createView(),
 			'user'       => $user,
 		]);
 	}
-
 
 
 

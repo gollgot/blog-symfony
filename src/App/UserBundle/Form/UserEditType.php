@@ -23,19 +23,6 @@ class UserEditType extends AbstractType
 			->add('username', TextType::class, [
 				'label' => 'Utilisateur'
 			])
-			->add('oldPassword', PasswordType::class,[
-				'mapped' => false,
-				'label'  => 'Mot de passe actuel',
-				'required' => false,
-			])
-			->add('password', RepeatedType::class, [
-				'type' => PasswordType::class,
-				'invalid_message' => 'Les mot de passes doivent correspondre',
-				'options' => array('attr' => array('class' => 'password-field')),
-				'required' => true,
-				'first_options'  => array('label' => 'Nouveau mot de passe'),
-				'second_options' => array('label' => 'Répétez le mot de passe'),
-			])
 			->add('role', EntityType::class, [
 				'class'        => 'App\UserBundle\Entity\Role',
 				'choice_label' => 'name[0]', // Role attribut, form will call role->getName() to display it

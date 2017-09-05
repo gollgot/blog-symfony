@@ -10,8 +10,6 @@
         {{ form_errors(profileForm) }}
 
         {{ form_row(profileForm.username) }}
-        {{ form_row(profileForm.oldPassword) }}
-        {{ form_row(profileForm.password) }}
         {% if is_granted('ROLE_ADMIN') %}
             {{ form_row(profileForm.role) }}
         {% else %}
@@ -23,12 +21,9 @@
         {{ form_row(profileForm._token) }}
 
         <button class="btn btn-success btn-left">Éditer</button>
-        <br><br>
 
     {{ form_end(profileForm, {'render_rest': false}) }}
-
-
-
-
+    <a href="{{ path('users_profile_password') }}"><button class="btn btn-primary btn-left">Changer de mot de passe</button></a>
+    <br><br>
 
 {% endblock %}
