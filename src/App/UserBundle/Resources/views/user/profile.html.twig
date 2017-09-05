@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profile{% endblock %}
+
+{% block body %}
+
+    <h1>Édition de votre profile</h1>
+
+    {{ form_start(profileForm) }}
+        {{ form_errors(profileForm) }}
+
+        {{ form_row(profileForm.username) }}
+        {{ form_row(profileForm.oldPassword) }}
+        {{ form_row(profileForm.password) }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ form_row(profileForm.role) }}
+        {% else %}
+            {{ form_label(profileForm.role) }}
+            <div>{{ user.role.name[0] }}</div>
+            <br>
+        {% endif %}
+
+        {{ form_row(profileForm._token) }}
+
+        <button class="btn btn-success btn-left">Éditer</button>
+        <br><br>
+
+    {{ form_end(profileForm, {'render_rest': false}) }}
+
+
+
+
+
+{% endblock %}

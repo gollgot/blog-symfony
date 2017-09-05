@@ -139,6 +139,66 @@ class UserController extends Controller
 		return $this->redirectToRoute('users_index');
 	}
 
+	/**
+	 * Displays a form to edit the user connected profile
+	 *
+	 * @Route("/profile", name="users_profile")
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_WRITER')")
+	 */
+	public function profileAction(Request $request)
+	{
+		// Connected user
+		$user = $this->get('security.token_storage')->getToken()->getUser();
+		// Mandatory, because when I post the form, $user->getPassword() take form password field data...
+		$userHashPassword = $user->getPassword();
+		$oldRole = $user->getRole();
+		// Edit form
+		$profileForm = $this->createForm('App\UserBundle\Form\UserProfileType', $user);
+		$profileForm->handleRequest($request);
+
+		// Form submitted
+		if ($profileForm->isSubmitted()) {
+			/* CUSTOM ERROR HANDLING -> check if the old password field match to the user's password */
+			$rawOldPassword = $request->request->get('app_userbundle_user')['oldPassword'];
+			$oldPassword = hash('sha512', $rawOldPassword.'{'.$user->getSalt().'}');
+			if($oldPassword != $userHashPassword){
+				$profileForm->addError(new FormError('Mot de passe actuel ne correspond pas à votre mot de passe'));
+			}
+
+			// Form is valid
+			if($profileForm->isValid()){
+
+				// If no role submit (not admin user)
+				if(empty($request->request->get('app_userbundle_user')['role'])){
+					$user->setRole($oldRole); // Set the old role
+				}
+				// generate a 20 length random salt in same method (sha 512) as symfony security encoders I defined
+				$user->setSalt($this->generateRandomString(20));
+				// Set and hash the password + salt
+				$user->setPassword(hash('sha512', $user->getPassword().'{'.$user->getSalt().'}'));
+
+				// Get the entityManager and flush the user object
+				$this->getDoctrine()->getManager()->flush();
+				// If we change FROM admin role TO not admin role, we logout. This way role session is reloaded
+				if($oldRole->getName()[0] == "ROLE_ADMIN" && $user->getRoles()[0] != "ROLE_ADMIN"){
+					return $this->redirectToRoute('logout');
+				}else {
+					return $this->redirectToRoute('users_profile');
+				}
+			}
+		}
+
+		// Prevent error, if form not valid, just set the oldRole to the user
+		$user->setRole($oldRole);
+
+		return $this->render('@User/user/profile.html.twig', [
+			'profileForm'   => $profileForm->createView(),
+			'user'       => $user,
+		]);
+	}
+
+
 
 
 	/**

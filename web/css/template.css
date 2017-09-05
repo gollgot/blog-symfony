@@ -34,6 +34,12 @@ body #top-nav .content span.username{
     text-transform: capitalize;
     font-size: 15px;
 }
+body #top-nav .content span.username a{
+    color: #666;
+}
+body #top-nav .content span.username a:hover{
+    color: #1194f6;
+}
 body #top-nav .content button.logout{
     padding: 2px 10px 2px 10px;
     margin: 0px 6px 0px 6px;
