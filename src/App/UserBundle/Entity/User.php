@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -76,6 +77,12 @@ class User implements UserInterface
 	 * @OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="author")
 	 */
 	private $posts;
+
+	/**
+	 * One user has one api token.
+	 * @OneToOne(targetEntity="App\UserBundle\Entity\ApiToken", mappedBy="user", cascade={"remove"})
+	 */
+	private $apiToken;
 
 
     /**
@@ -276,5 +283,29 @@ class User implements UserInterface
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Set apiToken
+     *
+     * @param \App\UserBundle\Entity\ApiToken $apiToken
+     *
+     * @return User
+     */
+    public function setApiToken(\App\UserBundle\Entity\ApiToken $apiToken = null)
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    /**
+     * Get apiToken
+     *
+     * @return \App\UserBundle\Entity\ApiToken
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
     }
 }
