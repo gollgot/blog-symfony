@@ -16,7 +16,8 @@
         {{ form_end(edit_form) }}
 
         {{ form_start(delete_form) }}
-            <button class="btn btn-danger">Supprimer</button>
+            {% include 'modal/delete.html.twig' with {'message':'Voulez vous vraiment supprimer cette catégorie ?'}%}
+            <button class="btn btn-danger btn-delete">Supprimer</button>
         {{ form_end(delete_form) }}
     </section>
 {% endblock %}

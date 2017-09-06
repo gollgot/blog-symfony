@@ -122,6 +122,7 @@ class CategoryController extends Controller
 	 */
 	public function deleteAction(Request $request, Category $category)
 	{
+		$name = $category->getName();
 		$form = $this->createDeleteForm($category);
 		$form->handleRequest($request);
 
@@ -131,6 +132,8 @@ class CategoryController extends Controller
 			$em->flush();
 		}
 
+		// Success flash message
+		$request->getSession()->getFlashBag()->add('success', 'La catégorie "'.$name.'" à bien été supprimée');
 		return $this->redirectToRoute('categories_index');
 	}
 
