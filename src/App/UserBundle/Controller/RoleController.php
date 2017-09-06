@@ -53,7 +53,8 @@ class RoleController extends Controller
 
 			$em->persist($role);
 			$em->flush();
-
+			// Success flash message
+			$request->getSession()->getFlashBag()->add('success', 'Votre nouveau rôle à bien été créé');
 			return $this->redirectToRoute('roles_index');
 		}
 

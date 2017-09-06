@@ -60,7 +60,8 @@ class UserController extends Controller
 
 			$em->persist($user);
 			$em->flush();
-
+			// Success flash message
+			$request->getSession()->getFlashBag()->add('success', 'Votre nouvel utilisateur à bien été créé');
 			return $this->redirectToRoute('users_index');
 		}
 

@@ -68,7 +68,8 @@ class PostController extends Controller
 
 			$em->persist($post);
 			$em->flush();
-
+			// Success flash message
+			$request->getSession()->getFlashBag()->add('success', 'Votre nouvel article à bien été créé');
 			return $this->redirectToRoute('post_index');
 		}
 
@@ -133,7 +134,8 @@ class PostController extends Controller
 			$comment->setPost($post);
 			$em->persist($comment);
 			$em->flush();
-
+			// Success flash message
+			$request->getSession()->getFlashBag()->add('success', 'Votre commentaire à bien été ajouté');
 			return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
 		}
 

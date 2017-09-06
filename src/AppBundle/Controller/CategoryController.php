@@ -51,7 +51,8 @@ class CategoryController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($category);
 			$em->flush();
-
+			// Success flash message
+			$request->getSession()->getFlashBag()->add('success', 'Votre nouvelle catégorie à bien été créée');
 			return $this->redirectToRoute('categories_index');
 		}
 
