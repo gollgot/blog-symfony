@@ -108,6 +108,7 @@ class RoleController extends Controller
 	 */
 	public function deleteAction(Request $request, Role $role)
 	{
+		$roleName = $role->getName()[0];
 		$deleteForm = $this->createDeleteForm($role);
 		$deleteForm->handleRequest($request);
 
@@ -116,7 +117,8 @@ class RoleController extends Controller
 			$em->remove($role);
 			$em->flush();
 		}
-
+		// Success flash message
+		$request->getSession()->getFlashBag()->add('success', 'le rôle "'.$roleName.'" à bien été supprimé');
 		return $this->redirectToRoute('roles_index');
 	}
 

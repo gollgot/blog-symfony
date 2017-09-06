@@ -210,6 +210,7 @@ class PostController extends Controller
 	 */
 	public function deleteAction(Request $request, Post $post)
 	{
+		$postTitle = $post->getTitle();
 		$form = $this->createDeleteForm($post);
 		$form->handleRequest($request);
 
@@ -218,7 +219,8 @@ class PostController extends Controller
 			$em->remove($post);
 			$em->flush();
 		}
-
+		// Success flash message
+		$request->getSession()->getFlashBag()->add('success', 'L\'article "'.$postTitle.'" à bien été supprimé');
 		return $this->redirectToRoute('post_index');
 	}
 

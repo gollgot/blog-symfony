@@ -158,6 +158,7 @@ class UserController extends Controller
 	 */
 	public function deleteAction(Request $request, User $user)
 	{
+		$username = $user->getUsername();
 		$deleteForm = $this->createDeleteForm($user);
 		$deleteForm->handleRequest($request);
 
@@ -167,6 +168,8 @@ class UserController extends Controller
 			$em->flush();
 		}
 
+		// Success flash message
+		$request->getSession()->getFlashBag()->add('success', 'l\'utilisateur "'.$username.'" à bien été supprimé');
 		return $this->redirectToRoute('users_index');
 	}
 

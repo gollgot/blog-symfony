@@ -22,7 +22,8 @@
         </div>
     {% else %}
         {{ form_start(deleteForm) }}
-            <button class="btn btn-danger">Supprimer</button>
+            {% include 'modal/delete.html.twig' with {'message':'Voulez-vous vraiment supprimer ce rôle ?'}%}
+            <button class="btn btn-danger btn-delete">Supprimer</button>
         {{ form_end(deleteForm) }}
     {% endif %}
 
