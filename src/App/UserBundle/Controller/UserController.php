@@ -86,6 +86,8 @@ class UserController extends Controller
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
 			$this->getDoctrine()->getManager()->flush();
+			// Success flash message
+			$request->getSession()->getFlashBag()->add('success', 'Profile utilisateur à bien été bien mis à jour');
 			return $this->redirectToRoute('users_index');
 		}
 
@@ -132,6 +134,9 @@ class UserController extends Controller
 
 				// Get the entityManager and flush the user object
 				$this->getDoctrine()->getManager()->flush();
+
+				// Success flash message
+				$request->getSession()->getFlashBag()->add('success', 'Profile utilisateur à bien été bien mis à jour');
 
 				return $this->redirectToRoute('users_index');
 			}
@@ -186,8 +191,10 @@ class UserController extends Controller
 			if(empty($request->request->get('app_userbundle_user')['role'])){
 				$user->setRole($oldRole);
 			}
-
+			// save
 			$this->getDoctrine()->getManager()->flush();
+			// Success message
+			$request->getSession()->getFlashBag()->add('success', 'Votre profile à bien été mise à jour');
 			// If we change the role FROM admin TO an other role as admin -> logout to prevent cache problems
 			if($oldRole->getName()[0] == 'ROLE_ADMIN' && $user->getRole()->getName()[0] != 'ROLE_ADMIN'){
 				return $this->redirectToRoute('logout');

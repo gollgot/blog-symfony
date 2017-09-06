@@ -4,13 +4,7 @@
 
 {% block body %}
 
-    {% if app.session.flashBag.has('success') %}
-        <div class="alert alert-success" role="alert">
-            {% for message in app.session.flashBag.get('success') %}
-                {{ message }}
-            {% endfor %}
-        </div>
-    {% endif %}
+    {% include 'flashMessage/success.html.twig' %}
 
     <h1>Édition de votre profile</h1>
 

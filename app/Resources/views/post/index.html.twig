@@ -3,7 +3,9 @@
 {% block title %}Articles{% endblock %}
 
 {% block body %}
-    
+
+    {% include 'flashMessage/success.html.twig' %}
+
     <h1>Tous les articles</h1>
 
     <table id="table-post-index" class="table table-bordered table-hover table-responsive">

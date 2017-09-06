@@ -187,7 +187,8 @@ class PostController extends Controller
 
 			// Get the entityManager and flush the post object
 			$this->getDoctrine()->getManager()->flush();
-
+			// Success flash message
+			$request->getSession()->getFlashBag()->add('success', 'L\'article à bien été mis à jour');
 			return $this->redirectToRoute('post_index');
 		}
 

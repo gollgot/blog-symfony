@@ -86,7 +86,8 @@ class RoleController extends Controller
 
 			// Get the entityManager and flush the user object
 			$this->getDoctrine()->getManager()->flush();
-
+			// Success flash message
+			$request->getSession()->getFlashBag()->add('success', 'Le rôle à bien été bien mis à jour');
 			return $this->redirectToRoute('roles_index');
 		}
 

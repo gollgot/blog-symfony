@@ -100,7 +100,8 @@ class CategoryController extends Controller
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
 			$this->getDoctrine()->getManager()->flush();
-
+			// Success flash message
+			$request->getSession()->getFlashBag()->add('success', 'La catégorie à bien été mise à jour');
 			return $this->redirectToRoute('categories_index');
 		}
 
