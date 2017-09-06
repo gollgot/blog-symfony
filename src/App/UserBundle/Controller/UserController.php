@@ -237,6 +237,9 @@ class UserController extends Controller
 				// Get the entityManager and flush the user object
 				$this->getDoctrine()->getManager()->flush();
 
+				// Success flash message
+				$request->getSession()->getFlashBag()->add('success', 'Votre mot de passe à bien été changé');
+
 				return $this->redirectToRoute('users_profile');
 			}
 		}
