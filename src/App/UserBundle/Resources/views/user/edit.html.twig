@@ -14,7 +14,7 @@
         {{ form_widget(editForm) }}
         <button class="btn btn-success btn-left">Éditer</button>
     {{ form_end(editForm) }}
-
+        <a href="{{ path('users_edit_password', {id: user.id}) }}"><button class="btn btn-primary btn-left">Changer de mot de passe</button></a>
     {{ form_start(deleteForm) }}
         <button class="btn btn-danger">Supprimer</button>
     {{ form_end(deleteForm) }}

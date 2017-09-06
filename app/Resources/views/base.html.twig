@@ -15,7 +15,7 @@
             <div id="top-nav">
                 <div class="content">
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <span class="username">{{ app.user.username }}</span>
+                        <span class="username"><a title="Mon profile" href="{{ path('users_profile') }}">{{ app.user.username }}</a></span>
                         <a href="{{ path('logout') }}"><button class="btn btn-danger logout">Déconnexion</button></a>
                     {% else %}
                         <a class="login" href="{{ path("login") }}">Connexion</a>

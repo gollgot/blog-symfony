@@ -5,12 +5,12 @@
 
 {% block body %}
 
-    {# S'il y a une erreur, on l'affiche dans un joli cadre #}
+    {# if error, display in pretty rectangle #}
     {% if error %}
         <div class="alert alert-danger">{{ error.message|trans }}</div>
     {% endif %}
 
-    {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
+    {# Custom form, with the login_check path, defined on the config #}
     <form action="{{ path('login_check') }}" method="post">
         <label for="username">Utilisateur</label><br>
         <input type="text" id="username" name="_username" value="{{ last_username }}" />
@@ -18,7 +18,9 @@
         <label for="password">Mot de passe</label><br>
         <input type="password" id="password" name="_password" />
         <br><br>
-
+        <input type="checkbox" id="remember_me" name="_remember_me" />
+        <label for="remember_me">Se souvenir de moi</label>
+        <br><br>
         <button class="btn btn-primary">Connexion</button>
     </form>
 

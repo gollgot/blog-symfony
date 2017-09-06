@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\UserBundle\Repository\UserRepository")
+ * @UniqueEntity("username", message="Ce nom d'utilisateur n'est pas disponible")
  */
 class User implements UserInterface
 {
@@ -308,4 +310,5 @@ class User implements UserInterface
     {
         return $this->apiToken;
     }
+
 }
