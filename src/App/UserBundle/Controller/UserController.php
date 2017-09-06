@@ -181,16 +181,24 @@ class UserController extends Controller
 		$profileForm->handleRequest($request);
 
 		if ($profileForm->isSubmitted() && $profileForm->isValid()) {
+			// if we are not an admin, role selectbox is not displayed, so we set role as the older role. because
+			// otherwhise the handleRequest() will setRole to null
+			if(empty($request->request->get('app_userbundle_user')['role'])){
+				$user->setRole($oldRole);
+			}
+
 			$this->getDoctrine()->getManager()->flush();
 			// If we change the role FROM admin TO an other role as admin -> logout to prevent cache problems
 			if($oldRole->getName()[0] == 'ROLE_ADMIN' && $user->getRole()->getName()[0] != 'ROLE_ADMIN'){
 				return $this->redirectToRoute('logout');
 			}else{
-				return $this->redirectToRoute('users_index');
+				return $this->redirectToRoute('users_profile');
 			}
-			return $this->redirectToRoute('users_profile');
 		}
 
+		// If there is an error and we are not admin, we don't have the role selectBox, so
+		// the "handleRequest()" will set the $user->setRole() to null, so I added the old role
+		$user->setRole($oldRole);
 		// Load a special form with delete method etc..
 		$deleteForm = $this->createDeleteForm($user);
 
