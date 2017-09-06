@@ -177,7 +177,7 @@ class UserController extends Controller
 		$user = $this->get('security.token_storage')->getToken()->getUser();
 		$oldRole = $user->getRole();
 		// Edit form
-		$profileForm = $this->createForm('App\UserBundle\Form\UserProfileType', $user);
+		$profileForm = $this->createForm('App\UserBundle\Form\UserEditType', $user);
 		$profileForm->handleRequest($request);
 
 		if ($profileForm->isSubmitted() && $profileForm->isValid()) {
