@@ -10,3 +10,11 @@ user:
 # api routes are defined in the routing file of the ApiBundle
 api:
     resource: "@ApiBundle/Resources/config/routing.yml"
+
+
+
+
+
+# RSS Atom Bundle
+rssatom:
+    resource: "@DebrilRssAtomBundle/Resources/config/routing.yml"
