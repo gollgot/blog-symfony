@@ -68,6 +68,9 @@
 .right-container #searchForm {
     margin-bottom:20px;
 }
+.right-container #rssForm {
+    margin-bottom:20px;
+}
 .right-container .last-post{
     margin-bottom: 20px;
 }

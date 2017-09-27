@@ -5,6 +5,14 @@
     <button class="btn btn-primary">Rechercher</button>
 </form>
 
+<h4>Lecteur RSS</h4>
+
+<form id="rssForm" action="{{ path('rss_read') }}" method="POST">
+    <input type="text" name="rss-link" required placeholder="Lien flux RSS"/>
+    <button class="btn btn-primary">Lancer</button>
+</form>
+<br>
+
 <h4>Derniers articles</h4>
 
 {% for lastPost in lastPosts %}
