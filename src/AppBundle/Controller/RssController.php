@@ -51,6 +51,9 @@ class RssController extends Controller
 	 */
     public function FeedAction()
 	{
+		$em = $this->getDoctrine()->getManager();
+		$posts = $em->getRepository('AppBundle:Post')->findAll();
+
 		// build the feed
 		$feedIo = $this->container->get('feedio');
 
@@ -58,7 +61,13 @@ class RssController extends Controller
 		$feed = new Feed;
 		$feed->setTitle('Mon titre');
 
-
+		foreach($posts as $post){
+			$item = $feed->newItem();
+			$item->setTitle($post->getTitle());
+			$item->setDescription(substr($post->getContent(), 0, 40)."...");
+			$item->setLink($this->generateUrl('post_show', array('id' => $post->getId())));
+			$feed->add($item);
+		}
 
 		// convert it into Atom
 		$atomString = $feedIo->toAtom($feed);
