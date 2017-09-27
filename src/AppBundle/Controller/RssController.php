@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RssController extends Controller
 {
 	/**
-	 * Lists all category entities.
+	 * Read a Feed RSS Url and display the feed
 	 *
 	 * @Route("/rss/read", name="rss_read")
 	 * @Method({"GET", "POST"})
@@ -30,7 +30,7 @@ class RssController extends Controller
 		// read a feed
 		$result = $feedIo->read($rssLink);
 		// get feed title
-		$feedTitle = $result->getFeed()->getTitle();
+		$feedTitle = $result->getFeed()->getTitle()." / ".$result->getFeed()->getDescription();
 		$feedItems = $result->getFeed();
 
 
@@ -41,7 +41,29 @@ class RssController extends Controller
 			'feedItems'  => $feedItems,
 		]);
 
-
     }
+
+	/**
+	 *
+	 *
+	 * @Route("/rss/feed", name="rss_feed")
+	 * @Method({"GET"})
+	 */
+    public function FeedAction()
+	{
+		// build the feed
+		$feedIo = $this->container->get('feedio');
+
+		// build the feed
+		$feed = new Feed;
+		$feed->setTitle('Mon titre');
+
+
+
+		// convert it into Atom
+		$atomString = $feedIo->toAtom($feed);
+		dump($atomString);
+		die();
+	}
 
 }
