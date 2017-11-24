@@ -66,6 +66,9 @@ class PostController extends Controller
 			// Set the unique name as name in the field
 			$post->setImage($fileName);
 
+            // Escape all tag except <b> and <u> (white list) -> to prevent xss attacks
+            $post->setContent(strip_tags($post->getContent(), '<b><u>'));
+
 			$em->persist($post);
 			$em->flush();
 			// Success flash message
@@ -186,6 +189,11 @@ class PostController extends Controller
 			);
 			// Set the unique name as name in the field
 			$post->setImage($fileName);
+
+
+            // Escape all tag except <b> and <u> (white list) -> to prevent xss attacks
+			$post->setContent(strip_tags($post->getContent(), '<b><u>'));
+
 
 			// Get the entityManager and flush the post object
 			$this->getDoctrine()->getManager()->flush();
